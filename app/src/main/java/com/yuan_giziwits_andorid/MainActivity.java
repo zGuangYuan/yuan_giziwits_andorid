@@ -18,6 +18,7 @@ import com.gizwits.gizwifisdk.listener.GizWifiSDKListener;
 import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.yuan_giziwits_andorid.UI.NetConfigActivity;
+import com.yuan_giziwits_andorid.Utils.SharePreferenceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //弹窗
-               Toast.makeText(MainActivity.this,"点击加号",Toast.LENGTH_SHORT).show();
+               //Toast.makeText(MainActivity.this,"点击加号",Toast.LENGTH_SHORT).show();
                startActivity(new Intent(MainActivity.this, NetConfigActivity.class));
                finish();
             }
@@ -83,7 +84,12 @@ public class MainActivity extends AppCompatActivity {
         //通知事件的下发
         public void didNotifyEvent(GizEventType eventType, Object
                 eventSource, GizWifiErrorCode eventID, String eventMessage) {
+
+            //SDK初始化成功
             if (eventType == GizEventType.GizEventSDK) {
+                //匿名登陆
+                GizWifiSDK.sharedInstance().userLoginAnonymous();
+
                 // SDK发生异常的通知
                 Log.i("GizWifiSDK", "SDK event happened: " + eventID + ", " +
                         eventMessage);
@@ -100,6 +106,25 @@ public class MainActivity extends AppCompatActivity {
             } else if (eventType == GizEventType.GizEventToken) {
                 // token失效通知
                 Log.i("GizWifiSDK", "token " + (String)eventSource + " expired: " + eventMessage);
+            }
+        }
+        @Override
+        public void didUserLogin(GizWifiErrorCode result, String uid, String token) {
+            super.didUserLogin(result, uid, token);
+            if (result == GizWifiErrorCode.GIZ_SDK_SUCCESS) {
+                    // 登录成功
+                Log.e("yuangege","登陆成功");
+                //打印uid和token
+                Log.e("yuangege","uid: "+uid);
+                Log.e("yuangege","token: "+token);
+                //把uid和token存储到本地
+                SharePreferenceUtils.putString(MainActivity.this,"_uid",uid);
+                SharePreferenceUtils.putString(MainActivity.this,"_token",token);
+
+
+            } else {
+                    // 登录失败
+                    Log.e("yuangege","登陆失败");
             }
         }
     };
