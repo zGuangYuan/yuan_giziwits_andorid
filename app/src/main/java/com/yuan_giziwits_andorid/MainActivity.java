@@ -2,14 +2,22 @@ package com.yuan_giziwits_andorid;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.gizwits.gizwifisdk.api.GizWifiSDK;
 import com.gizwits.gizwifisdk.enumration.GizEventType;
 import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
 import com.gizwits.gizwifisdk.listener.GizWifiSDKListener;
+import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
+import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.yuan_giziwits_andorid.UI.NetConfigActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +28,33 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_splash);
         setContentView(R.layout.activity_main);
         //初始化SDK
         initSDK();
+        //初始化UI
+        initView();
+    }
+
+    private void initView() {
+        //控件实例化
+        QMUITopBar topBar = findViewById(R.id.topBar_ID);
+        //设置标题
+        topBar.setTitle("智家App");
+        //在topbar添加一个图标，是一个加号的图片
+        topBar.addRightImageButton(R.mipmap.ic_add,R.id.topBar_right_add_icon).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //弹窗
+               Toast.makeText(MainActivity.this,"点击加号",Toast.LENGTH_SHORT).show();
+               startActivity(new Intent(MainActivity.this, NetConfigActivity.class));
+               finish();
+            }
+        });
+
     }
 
     private void initSDK(){
