@@ -21,6 +21,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.gizwits.gizwifisdk.api.GizWifiSDK;
@@ -63,9 +64,15 @@ public class NetConfigActivity extends AppCompatActivity {
             //配网成功
             if(msg.what== 110){
                 NetConfig_Dialog.setMessage("配网成功");
+                //有回调结果把弹窗的按钮隐藏
+                NetConfig_Dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setVisibility(View.VISIBLE);
+                NetConfig_Dialog.getButton(DialogInterface.BUTTON_POSITIVE).setVisibility(View.VISIBLE);
             }else if(msg.what == 111)
             {
                 NetConfig_Dialog.setMessage("配网失败");
+                //有回调结果把弹窗的按钮隐藏
+                NetConfig_Dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setVisibility(View.VISIBLE);
+                NetConfig_Dialog.getButton(DialogInterface.BUTTON_POSITIVE).setVisibility(View.VISIBLE);
             }
         }
     };
@@ -166,9 +173,6 @@ public class NetConfigActivity extends AppCompatActivity {
         });
         //搜索wifi按钮的监听事件
         mBtn_start_search.setOnClickListener(new View.OnClickListener() {
-            /**
-             * @param view
-             */
             @Override
             public void onClick(View view) {
                 //得到wifi和密码
@@ -178,41 +182,44 @@ public class NetConfigActivity extends AppCompatActivity {
                 if(!mssid.isEmpty()&& !mPasw.isEmpty()){
 
                     NetConfig_Dialog = new ProgressDialog(NetConfigActivity.this,5);
-                    NetConfig_Dialog.setTitle("正在努力配网中...");
+                    NetConfig_Dialog.setMessage("正在努力配网中...");
                     NetConfig_Dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     NetConfig_Dialog.setCancelable(false);//屏幕外不可点击
                     NetConfig_Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
+                                        //使Dialog消失
                                         NetConfig_Dialog.dismiss();
                                 }
                             }
-
                     );
                     NetConfig_Dialog.setButton(DialogInterface.BUTTON_POSITIVE, "好的", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     NetConfig_Dialog.dismiss();
-                                    //返回上一层
-                                    startActivity(new Intent(NetConfigActivity.this,MainActivity.class));
+                                    //摧毁当前Activity,返回上一层
                                     finish();
                                 }
                             }
 
                     );
                     NetConfig_Dialog.show(); //显示弹窗
+                    //没有回调结果把弹窗的按钮隐藏
+                    NetConfig_Dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setVisibility(View.GONE);
+                    NetConfig_Dialog.getButton(DialogInterface.BUTTON_POSITIVE).setVisibility(View.GONE);
+
+
                     //开始配网
                     startAirLink(mssid,mPasw);
 
                 }
+                else{
+                    Toast.makeText(NetConfigActivity.this,"请输入密码",Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
-
-
     }
-
-
 
     private void startAirLink(String ssid,String pasw){
         GizWifiSDK.sharedInstance().setListener(listener);
@@ -225,7 +232,6 @@ public class NetConfigActivity extends AppCompatActivity {
                 GizWifiConfigureMode.GizWifiAirLink,
                 null,
                 30,types);       //旧版的配网方式
-
     }
     private GizWifiSDKListener listener = new GizWifiSDKListener(){
         //回调方法

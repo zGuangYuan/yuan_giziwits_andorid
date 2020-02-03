@@ -3,16 +3,19 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
     <com.qmuiteam.qmui.widget.QMUITopBar
         android:id="@+id/topBar_ID"
         android:layout_width="match_parent"
         android:layout_height="?attr/qmui_topbar_height"
         app:qmui_topbar_title_color="@color/tab_panel_bg" />
+    <ListView
+        android:id="@+id/lv_BoundDevices_ID"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
 </LinearLayout>

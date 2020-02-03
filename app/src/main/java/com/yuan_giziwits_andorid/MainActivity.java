@@ -2,12 +2,16 @@ package com.yuan_giziwits_andorid;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
@@ -17,6 +21,7 @@ import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
 import com.gizwits.gizwifisdk.listener.GizWifiSDKListener;
 import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.yuan_giziwits_andorid.Adapter.LVDevicesAdapter;
 import com.yuan_giziwits_andorid.UI.NetConfigActivity;
 import com.yuan_giziwits_andorid.Utils.SharePreferenceUtils;
 
@@ -26,13 +31,40 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Listview显示框
+    private ListView lv_BoundDevices;
+    //初始化适配器
+    private LVDevicesAdapter adapter;
+    //创建一个集合变量，用于存放机智云绑定设备列表的信息
+    private List<GizWifiDevice> GiziwitsdeviceList;
+
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.what==109){
+                //通知适配器
+                adapter.notifyDataSetChanged();
+            }
+        }
+    };
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 设置 SDK 监听,保证每次打开Acticity,能有设置SDK回调的监听
+        GizWifiSDK.sharedInstance().setListener(mListener);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_splash);
         setContentView(R.layout.activity_main);
         //初始化SDK
         initSDK();
@@ -41,8 +73,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        //新建一个新的集合，用于存储设备信息
+        GiziwitsdeviceList = new ArrayList<>();
+        //实例化控件ListView
+        lv_BoundDevices = findViewById(R.id.lv_BoundDevices_ID);
         //控件实例化
         QMUITopBar topBar = findViewById(R.id.topBar_ID);
+        lv_BoundDevices = findViewById(R.id.lv_BoundDevices_ID);
         //设置标题
         topBar.setTitle("智家App");
         //在topbar添加一个图标，是一个加号的图片
@@ -52,17 +89,36 @@ public class MainActivity extends AppCompatActivity {
                 //弹窗
                //Toast.makeText(MainActivity.this,"点击加号",Toast.LENGTH_SHORT).show();
                startActivity(new Intent(MainActivity.this, NetConfigActivity.class));
-               finish();
             }
         });
+
+
+        //获取绑定设备列表
+        getBoundDevicesList();
+        //调用适配器
+        adapter = new LVDevicesAdapter(this,GiziwitsdeviceList);
+        lv_BoundDevices.setAdapter(adapter);
+
+    }
+
+    /**
+     * 获取绑定设备列表函数
+     */
+    private void getBoundDevicesList() {
+        //获取从网络获取到本地的uid和token
+        String uid   =SharePreferenceUtils.getString(MainActivity.this,"_uid",null);
+        String token =SharePreferenceUtils.getString(MainActivity.this,"_token",null);
+        if(uid!=null && token!=null){
+            //获取绑定设备
+            GizWifiSDK.sharedInstance().getBoundDevices(uid,token);
+
+        }
 
     }
 
     private void initSDK(){
-        // 设置 SDK 监听
-        GizWifiSDK.sharedInstance().setListener(mListener);
-        // 设置 AppInfo
 
+        // 设置 AppInfo
         ConcurrentHashMap<String, String> appInfo =  new ConcurrentHashMap<>();
         appInfo.put("appId", "13d4933f6748458782bbd3e83b19b99e");
         appInfo.put("appSecret", "7c3a23b8ce2943bbb2a82ae7cf86f93c");
@@ -126,6 +182,22 @@ public class MainActivity extends AppCompatActivity {
                     // 登录失败
                     Log.e("yuangege","登陆失败");
             }
+        }
+
+        @Override
+        public void didDiscovered(GizWifiErrorCode result, List<GizWifiDevice> deviceList) {
+            super.didDiscovered(result, deviceList);
+                // 提示错误原因
+            if(result != GizWifiErrorCode.GIZ_SDK_SUCCESS) {
+                Log.e("yuan123", "result: " + result.name());
+            }
+                // 显示设备列表
+            Log.e("yuan123", "绑定的设备列表: " + deviceList);
+            //每次拿到数据就清空一下设备集合
+            GiziwitsdeviceList.clear();
+            //然后再去拿取回调的数据
+            GiziwitsdeviceList.addAll(deviceList);
+            mHandler.sendEmptyMessage(109);
         }
     };
 }
