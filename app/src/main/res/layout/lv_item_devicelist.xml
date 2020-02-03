@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:padding="20dp"
+    android:background="@drawable/bg_device_list"
+    android:layout_marginTop="20dp">
+    <ImageView
+        android:id="@+id/iv_devices_ID"
+        android:src="@drawable/ic_deviceslist_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerInParent="true"
+        />
+    <TextView
+        android:id="@+id/tv_CurrentDevicesNane_ID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textSize="20dp"
+        android:textColor="@color/app_color_theme_4"
+        android:layout_centerInParent="true"
+        android:layout_toRightOf="@id/iv_devices_ID"
+        android:layout_marginLeft="30dp"
+        android:text="测试灯"/>
+    <TextView
+        android:id="@+id/tv_Online_state_ID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textSize="12dp"
+        android:layout_centerInParent="true"
+        android:layout_toLeftOf="@id/iv_device_next_ID"
+        android:layout_marginRight="10dp"
+        android:text="在线"/>
+    <ImageView
+        android:id="@+id/iv_device_next_ID"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@mipmap/ic_next"
+        android:layout_centerInParent="true"
+        android:layout_alignParentEnd="true"
+        />
+
+
+</RelativeLayout>
