@@ -21,7 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".UI.NetConfigActivity"></activity>
+        <activity android:name=".DevicrControl.LockActivity"/>
+        <activity android:name=".DevicrControl.RGBLightActivity"/>
+        <activity android:name=".DevicrControl.MainDeviceControlActivity"></activity>
+        <activity android:name=".UI.NetConfigActivity" />
         <activity android:name=".UI.SplashActivity">
 
             <!-- 设置为全屏 -->

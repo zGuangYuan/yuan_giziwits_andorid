@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.gizwits.gizwifisdk.api.GizWifiSDK;
 import com.gizwits.gizwifisdk.enumration.GizEventType;
+import com.gizwits.gizwifisdk.enumration.GizWifiDeviceNetStatus;
 import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
 import com.gizwits.gizwifisdk.listener.GizWifiDeviceListener;
 import com.gizwits.gizwifisdk.listener.GizWifiSDKListener;
@@ -30,6 +31,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.yuan_giziwits_andorid.Adapter.LVDevicesAdapter;
+import com.yuan_giziwits_andorid.DevicrControl.MainDeviceControlActivity;
 import com.yuan_giziwits_andorid.UI.NetConfigActivity;
 import com.yuan_giziwits_andorid.Utils.SharePreferenceUtils;
 
@@ -99,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
         lv_BoundDevices = findViewById(R.id.lv_BoundDevices_ID);
         //控件实例化
         QMUITopBar topBar = findViewById(R.id.topBar_ID);
-        lv_BoundDevices = findViewById(R.id.lv_BoundDevices_ID);
         //设置标题
         topBar.setTitle("智家App");
         //在topbar添加一个图标，是一个加号的图片
@@ -118,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
         //调用适配器
         adapter = new LVDevicesAdapter(this,GiziwitsdeviceList);
         lv_BoundDevices.setAdapter(adapter);
+        //长按ListView条目的回调函数
         lv_BoundDevices.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -126,6 +128,15 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        //轻触ListView条目的回调函数
+        lv_BoundDevices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //把点击条目的设备信息作为参数传递进入
+                showTouchDialogOnClick(GiziwitsdeviceList.get(position));
+            }
+        });
+
 
         //实例化下拉下拉刷新空间，然后初始化
         mSwipeRefreshLayout =findViewById(R.id.SwipeRefreshLayout_ID);
@@ -140,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         //手动调用通知系统测量
         mSwipeRefreshLayout.measure(0,0);
         //打开页面就是下拉的状态
-        mSwipeRefreshLayout.setRefreshing(true);
+        //mSwipeRefreshLayout.setRefreshing(true);
         //设置手动下拉的监听事件
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -191,13 +202,27 @@ public class MainActivity extends AppCompatActivity {
                 },3000);
             }
         });
-        //3s之后自从收回刷新状态
-        lv_BoundDevices.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        },3000);
+//        //3s之后自从收回刷新状态
+//        lv_BoundDevices.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mSwipeRefreshLayout.setRefreshing(false);
+//            }
+//        },3000);
+    }
+
+    /**
+     * 功能：轻触Listview的回调函数,目的：进入设备控制界面
+     * @param device
+     */
+    private void showTouchDialogOnClick(GizWifiDevice device) {
+        if(device.getNetStatus() == GizWifiDeviceNetStatus.GizDeviceOffline){
+            return;
+        }else{  //在线
+            // mDevice 是从设备列表中获取到的设备实体对象
+            device.setListener(mGizwitDeviceListener);  //注意监听类是Device的
+            device.setSubscribe("0b24bb3a613344589f5aded3bdbc82d5",true); // 订阅设备
+        }
     }
 
 
@@ -233,8 +258,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-     * 功能：解绑设备
-     * @param device
+     * 功能：解绑设备的弹窗Dialog
+     * * @param device
      */
     private void showUnbindDeviceDialog(final GizWifiDevice device) {
         new QMUIDialog.MessageDialogBuilder(MainActivity.this)
@@ -307,6 +332,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 功能：SDK初始化函数，主要设置产品名字之类的
+     */
     private void initSDK(){
 
         // 设置 AppInfo
@@ -326,12 +354,14 @@ public class MainActivity extends AppCompatActivity {
         GizWifiSDK.sharedInstance().startWithAppInfo(this, appInfo,productInfo, null, false);
         // 实现系统事件通知回调
     }
+
+    /**
+     * 功能：机智云提供的SDK有关的监听类函数，可以监听各种类别的事件
+     */
     GizWifiSDKListener mListener = new GizWifiSDKListener() {
         @Override
-        //通知事件的下发
-        public void didNotifyEvent(GizEventType eventType, Object
-                eventSource, GizWifiErrorCode eventID, String eventMessage) {
-
+        //通知事件的下发的监听
+        public void didNotifyEvent(GizEventType eventType, Object eventSource, GizWifiErrorCode eventID, String eventMessage) {
             //SDK初始化成功
             if (eventType == GizEventType.GizEventSDK) {
                 //匿名登陆
@@ -355,6 +385,13 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("GizWifiSDK", "token " + (String)eventSource + " expired: " + eventMessage);
             }
         }
+
+        /**
+         * 功能：获取uid和token
+         * @param result
+         * @param uid
+         * @param token
+         */
         @Override
         public void didUserLogin(GizWifiErrorCode result, String uid, String token) {
             super.didUserLogin(result, uid, token);
@@ -438,6 +475,10 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * 功能：绑定远程设备
+     * @param device  绑定的设备
+     */
     private void startBindDevice(GizWifiDevice device) {
         if(uid!=null && token !=null){
             //绑定远程设备
@@ -447,11 +488,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //*实行设备信息修改的监听，此处监听了别名的修改*/
+    /*
+     * 实行设备信息修改的监听，此处监听了别名的修改
+     */
     private GizWifiDeviceListener mGizwitDeviceListener = new GizWifiDeviceListener() {
         @Override
-        public void didSetCustomInfo(GizWifiErrorCode result, GizWifiDevice
-                device) {
+        public void didSetCustomInfo(GizWifiErrorCode result, GizWifiDevice device) {
             if (result == GizWifiErrorCode.GIZ_SDK_SUCCESS) {
                 // 修改成功，重新获取网络的设备信息，刷新一个页面
                 if(GizWifiSDK.sharedInstance().getDeviceList().size()!=0){
@@ -466,6 +508,27 @@ public class MainActivity extends AppCompatActivity {
             } else {
                  // 修改失败
                 Toast.makeText(MainActivity.this, "修改失败，请稍后重试 " , Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        /**
+         * 功能：订阅设备回调函数
+         * @param result
+         * @param device
+         * @param isSubscribed
+         */
+        @Override
+        public void didSetSubscribe(GizWifiErrorCode result, GizWifiDevice device, boolean isSubscribed) {
+            super.didSetSubscribe(result, device, isSubscribed);
+            if (result == GizWifiErrorCode.GIZ_SDK_SUCCESS) {
+                // 订阅或解除订阅成功
+                Toast.makeText(MainActivity.this, "订阅设备成功 " , Toast.LENGTH_SHORT).show();
+                //进入设备控制界面
+                startActivity(new Intent(MainActivity.this, MainDeviceControlActivity.class));
+
+            } else {
+                // 失败
+                Toast.makeText(MainActivity.this, "订阅设备失败！ " , Toast.LENGTH_SHORT).show();
             }
         }
     };

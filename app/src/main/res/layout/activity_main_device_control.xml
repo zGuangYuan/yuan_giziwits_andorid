@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/background02"
+        android:scrollbars="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <com.qmuiteam.qmui.widget.QMUITopBar
+                android:id="@+id/DeviceControl_topBar_ID"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/qmui_topbar_height"
+                app:qmui_topbar_title_color="@color/tab_panel_bg" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/Reset_ButtonId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="300dp"
+                    android:background="@drawable/btn_beselected"
+                    android:text="复位" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@drawable/btn_background"
+                    android:gravity="center"
+                    android:text="七彩灯控制面板"
+                    android:textColor="#f86354"
+                    android:textSize="30dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="42dp"
+                        android:layout_weight="0.10"
+                        android:background="@drawable/btn_beselected"
+                        android:text="七彩灯总控"
+                        android:textColor="@color/white"
+                        android:textSize="30sp" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="40dp"
+                        android:background="@drawable/color_control_selecter_cb"
+                        android:button="@null" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/RGB_Light_ButtonId"
+                        android:layout_width="157dp"
+                        android:layout_height="41dp"
+                        android:layout_marginRight="100dp"
+                        android:background="@drawable/btn_beselected"
+                        android:text="颜色控制"
+                        android:textColor="@color/white"
+                        android:textSize="30dp" />
+
+                    <CheckBox
+                        android:id="@+id/color_control_enter_ID"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="200dp"
+                        android:background="@drawable/icon"
+                        android:button="@null" />
+
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@drawable/btn_background"
+                    android:gravity="center"
+                    android:text="大灯开关面板"
+                    android:textColor="#f86354"
+                    android:textSize="30dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/TV_RedID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="大厅灯开关：关"
+                        android:textAllCaps="false"
+                        android:textColor="#33ff99"
+                        android:textSize="20dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox01_ID"
+                        android:layout_width="150dp"
+                        android:layout_height="85dp"
+                        android:background="@drawable/selecter02_cb"
+                        android:button="@null" />
+
+                    <TextView
+                        android:id="@+id/TV_GreenID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="5dp"
+                        android:text="食厅灯开关：关"
+                        android:textAllCaps="false"
+                        android:textColor="#33ff99"
+                        android:textSize="20dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox02_ID"
+                        android:layout_width="150dp"
+                        android:layout_height="85dp"
+                        android:background="@drawable/selecter02_cb"
+                        android:button="@null" />
+
+                    <TextView
+                        android:id="@+id/TV_BlueID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="卧室灯开关：关"
+                        android:textAllCaps="false"
+                        android:textColor="#33ff99"
+                        android:textSize="20dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox03_ID"
+                        android:layout_width="150dp"
+                        android:layout_height="85dp"
+                        android:background="@drawable/selecter02_cb"
+                        android:button="@null" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@drawable/btn_background"
+                    android:gravity="center"
+                    android:text="门禁开关面板"
+                    android:textColor="#f86354"
+                    android:textSize="30dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="0.24"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/IV_ButtonID"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="40dp"
+                        android:background="@mipmap/mybtnopen" />
+
+                    <ImageButton
+                        android:id="@+id/IV_closeButtonID"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="80dp"
+                        android:background="@mipmap/mybtnclose" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="门禁状态指示："
+                        android:textColor="#33ff99"
+                        android:textSize="20dp" />
+
+
+                    <TextView
+                        android:id="@+id/TV_indicateID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="关闭"
+                        android:textColor="#ffff00"
+                        android:textSize="20dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/btn_background"
+                    android:gravity="center"
+                    android:text="温湿度检测"
+                    android:textColor="#f86354"
+                    android:textSize="30dp" />
+                <!-- temp(数值只读) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    android:padding="50dp">
+
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="大气温度"
+                        android:textColor="#33ff99"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/tv_data_temp"
+                        android:layout_width="110dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:textColor="@color/green"
+                        android:textSize="30dp" />
+                </LinearLayout>
+                <!-- hum(数值只读) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:layout_weight="0.03"
+                    android:orientation="horizontal"
+                    android:padding="50dp">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:text="相对湿度"
+                        android:textColor="#33ff99"
+                        android:textSize="20dp" />
+
+
+                    <TextView
+                        android:id="@+id/tv_data_hum"
+                        android:layout_width="110dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="30dp"
+                        android:gravity="end"
+                        android:textColor="@color/green"
+                        android:textSize="30dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@drawable/btn_background"
+                    android:gravity="center"
+                    android:text="有毒气体检测"
+                    android:textColor="#f86354"
+                    android:textSize="30dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:layout_weight="0.03"
+
+                    android:padding="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:text="气体监测"
+                        android:textColor="#33ff99"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/tv_gsa_detection"
+                        android:layout_width="110dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="end"
+                        android:textColor="#FF0000"
+                        android:textSize="30dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@drawable/btn_background"
+                    android:gravity="center"
+                    android:text="红外感应检测"
+                    android:textColor="#f86354"
+                    android:textSize="30dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:layout_weight="0.03"
+                    android:padding="50dp">
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:text="人体检测"
+                        android:textColor="#33ff99"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/tv_body_move"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="end"
+                        android:textColor="#FF0000"
+                        android:textSize="30dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/Reset_DetnumId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/btn_beselected"
+                        android:text="复位检测" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="    检测次数统计:"
+                        android:textColor="#ca8687"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/TV_Det_timesID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" 0次"
+                        android:textColor="#1d953f"
+                        android:textSize="20dp" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
