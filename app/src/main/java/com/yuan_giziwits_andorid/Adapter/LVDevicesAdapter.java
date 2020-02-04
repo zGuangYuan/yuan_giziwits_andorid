@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
+import com.gizwits.gizwifisdk.enumration.GizWifiDeviceNetStatus;
 import com.yuan_giziwits_andorid.R;
 
 import java.util.List;
@@ -69,8 +70,38 @@ public class LVDevicesAdapter extends BaseAdapter {
             view1=view;
             viewHolderListView = (ViewHolderListView) view1.getTag();
         }
-        //对控件进行操作
-        viewHolderListView.mTvDeviceName.setText(device.getProductName());
+        //判断设备在线状态
+        if(device.getNetStatus() == GizWifiDeviceNetStatus.GizDeviceOffline)
+        {
+            //设置为离线，淡化文本tab_panel_divider
+            viewHolderListView.mTvDeviceState.setText("离线");
+            viewHolderListView.mTvDeviceState.setTextColor(mContent.getResources().getColor(R.color.tab_panel_divider));
+            //隐藏箭头
+            viewHolderListView.mIvNext.setVisibility(View.GONE);
+        }else{
+            //设备在线，则进一步分析是本地还是远程在线
+            if(device.isLAN()){
+                viewHolderListView.mTvDeviceState.setText("局域网在线");
+            }else{
+                viewHolderListView.mTvDeviceState.setText("远程在线");
+            }
+            //设置颜色为深色
+            viewHolderListView.mTvDeviceState.setTextColor(mContent.getResources().getColor(R.color.black_color));
+            //显示箭头
+            viewHolderListView.mIvNext.setVisibility(View.VISIBLE);
+
+        }
+        //判断设备是否有别名，如果有则优先显示别名
+        if(device.getAlias().isEmpty()){
+            //显示产品名字
+            viewHolderListView.mTvDeviceName.setText(device.getProductName());
+        }else{
+            //显示别名
+            viewHolderListView.mTvDeviceName.setText(device.getAlias());
+        }
+
+
+
 
         return view1;
     }

@@ -33,16 +33,22 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class MainActivity extends AppCompatActivity {
 
+    //uid和token的全局变量
+    private String uid;
+    private String token;
     //Listview显示框
     private ListView lv_BoundDevices;
     //初始化适配器
     private LVDevicesAdapter adapter;
     //创建一个集合变量，用于存放机智云绑定设备列表的信息
     private List<GizWifiDevice> GiziwitsdeviceList;
-
+    //变量的声明
     private SwipeRefreshLayout mSwipeRefreshLayout;
     //刷新的弹窗
     private QMUITipDialog refleshTipdialog;
+    //提示用户刷新成功的弹窗
+    private QMUITipDialog mqmuiTipDialog;
+
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler(){
@@ -55,8 +61,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-    private String uid;
-    private String token;
+
 
 
     @Override
@@ -106,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new LVDevicesAdapter(this,GiziwitsdeviceList);
         lv_BoundDevices.setAdapter(adapter);
 
+        //实例化下拉下拉刷新空间，然后初始化
         mSwipeRefreshLayout =findViewById(R.id.SwipeRefreshLayout_ID);
         //设置下拉的颜色
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.white);
@@ -116,30 +122,55 @@ public class MainActivity extends AppCompatActivity {
                                                     R.color.app_color_theme_5,
                                                     R.color.app_color_theme_6);
         //手动调用通知系统测量
-        mSwipeRefreshLayout.measure(10,10);
+        mSwipeRefreshLayout.measure(0,0);
         //打开页面就是下拉的状态
         mSwipeRefreshLayout.setRefreshing(true);
         //设置手动下拉的监听事件
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                //触发QMUI的刷新控件
                 refleshTipdialog = new QMUITipDialog.Builder(MainActivity.this)
-                        .setTipWord("正在刷新...")
-                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                        .setTipWord("正在刷新...")  //显示内容
+                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)  //显示类型
                         .create();
                 refleshTipdialog.show();
+                //下拉控件出发之后最多3s后消失
                 mSwipeRefreshLayout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        //拿到SDK里面的设备
+                        //拿到SDK里面的设备,其中包含绑定和未绑定的设备
                         if(GizWifiSDK.sharedInstance().getDeviceList().size() !=0){
-                            GiziwitsdeviceList.clear();
-                            GiziwitsdeviceList.addAll(GizWifiSDK.sharedInstance().getDeviceList());
-                            adapter.notifyDataSetChanged();
+                            GiziwitsdeviceList.clear();  //清空一下集合
+                            GiziwitsdeviceList.addAll(GizWifiSDK.sharedInstance().getDeviceList()); //拿到绑定和没有绑定的设备
+                            adapter.notifyDataSetChanged(); //调用适配器，去刷新数据
                         }
+                        //两个刷新的控件消失
                         refleshTipdialog.dismiss();
                         mSwipeRefreshLayout.setRefreshing(false);
-                        //显示另外一个弹窗
+                        //显示另外一个弹窗，通知用户刷新成功或者失败
+                        if(GiziwitsdeviceList.size() == 0){
+                            mqmuiTipDialog = new QMUITipDialog.Builder(MainActivity.this)
+                                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_NOTHING)
+                                    .setTipWord("暂无设备")
+                                    .create();
+                            mqmuiTipDialog.show();
+                        }else{
+                            mqmuiTipDialog = new QMUITipDialog.Builder(MainActivity.this)
+                                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
+                                    .setTipWord("获取成功")
+                                    .create();
+                            mqmuiTipDialog.show();
+                        }
+                        //显示获取成功之后 1.5s把这个标志取消掉
+                        mSwipeRefreshLayout.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mqmuiTipDialog.dismiss();
+                            }
+                        },1500);
+
+
                     }
                 },3000);
             }
@@ -162,11 +193,9 @@ public class MainActivity extends AppCompatActivity {
         uid = SharePreferenceUtils.getString(MainActivity.this,"_uid",null);
         token = SharePreferenceUtils.getString(MainActivity.this,"_token",null);
         if(uid !=null && token !=null){
-            //获取绑定设备
+            //获取绑定设备,有uid和token,获取指定绑定设备
             GizWifiSDK.sharedInstance().getBoundDevices(uid, token);
-
         }
-
     }
 
     private void initSDK(){
