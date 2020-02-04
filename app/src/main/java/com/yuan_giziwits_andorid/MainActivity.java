@@ -213,10 +213,13 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
+                            //重命名设备
                             case 0:
                                 showReDeviceNameDialog(device);
                                 break;
+                            //解绑设备
                             case 1:
+                                showUnbindDeviceDialog(device);
                                 break;
 
                         }
@@ -226,6 +229,34 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .show();
 
+    }
+
+
+    /**
+     * 功能：解绑设备
+     * @param device
+     */
+    private void showUnbindDeviceDialog(final GizWifiDevice device) {
+        new QMUIDialog.MessageDialogBuilder(MainActivity.this)
+                .setTitle("解绑设备")
+                .setMessage("确定要解绑当前设备吗？")
+                .addAction("取消", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                    }
+                })
+                .addAction("确定", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+
+                        GizWifiSDK.sharedInstance().setListener(mListener);
+                        GizWifiSDK.sharedInstance().unbindDevice(uid, token,
+                                device.getDid());
+                    }
+                })
+                .show();
     }
 
     /**
@@ -343,7 +374,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("yuangege","登陆失败");
             }
         }
-
         /**
          * @param result
          * @param deviceList 已经在局域网发现的设备，也就是连接到路由器中，包括未绑定的设备
@@ -373,8 +403,8 @@ public class MainActivity extends AppCompatActivity {
             mHandler.sendEmptyMessage(109);
         }
 
-
         /**
+         * 功能：绑定设备的回调
          * @param result
          * @param did
          */
@@ -387,6 +417,23 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 // 绑定失败
                 Toast.makeText(MainActivity.this,"绑定失败咯！",Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        /**
+         * 功能：解绑设备的回调方法
+         * @param result
+         * @param did
+         */
+        @Override
+        public void didUnbindDevice(GizWifiErrorCode result, String did) {
+            super.didUnbindDevice(result, did);
+            if (result == GizWifiErrorCode.GIZ_SDK_SUCCESS) {
+                // 解绑成功
+                Toast.makeText(MainActivity.this,"设备解绑成功",Toast.LENGTH_SHORT).show();
+            } else {
+                // 解绑失败
+                Toast.makeText(MainActivity.this,"设备解绑失败！",Toast.LENGTH_SHORT).show();
             }
         }
     };
