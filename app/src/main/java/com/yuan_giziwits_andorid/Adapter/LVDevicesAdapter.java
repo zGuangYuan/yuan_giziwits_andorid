@@ -75,9 +75,11 @@ public class LVDevicesAdapter extends BaseAdapter {
         {
             //设置为离线，淡化文本tab_panel_divider
             viewHolderListView.mTvDeviceState.setText("离线");
+            viewHolderListView.mTvDeviceState.setTextSize(20);
+
             viewHolderListView.mTvDeviceState.setTextColor(mContent.getResources().getColor(R.color.tab_panel_divider));
             //隐藏箭头
-            viewHolderListView.mIvNext.setVisibility(View.GONE);
+            viewHolderListView.mIvNext.setVisibility(View.INVISIBLE);
         }else{
             //设备在线，则进一步分析是本地还是远程在线
             if(device.isLAN()){

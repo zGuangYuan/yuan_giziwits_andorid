@@ -266,6 +266,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        /**
+         * @param result
+         * @param deviceList 已经在局域网发现的设备，也就是连接到路由器中，包括未绑定的设备
+         */
+        //这个函数是发现连接到云项目的设备才对，此时并没没有绑定设备
         @Override
         public void didDiscovered(GizWifiErrorCode result, List<GizWifiDevice> deviceList) {
             super.didDiscovered(result, deviceList);
@@ -274,12 +279,46 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("yuan123", "result: " + result.name());
             }
                 // 显示设备列表
-            Log.e("yuan123", "绑定的设备列表: " + deviceList);
+            Log.e("yuan123", "发现的设备列表: " + deviceList);
             //每次拿到数据就清空一下设备集合
             GiziwitsdeviceList.clear();
             //然后再去拿取回调的数据
             GiziwitsdeviceList.addAll(deviceList);
+            //绑定设备
+            for(int i=0; i < deviceList.size();i++){
+                //如果设备没有绑定
+                if(!deviceList.get(i).isBind()){
+                    //开始绑定,调用bindRemoteDevice（）函数，需要productkey和productscret等，故传一个GizWifiDevice的形参进去
+                    startBindDevice(deviceList.get(i));
+                }
+            }
             mHandler.sendEmptyMessage(109);
         }
+
+
+        /**
+         * @param result
+         * @param did
+         */
+        @Override
+        public void didBindDevice(GizWifiErrorCode result, String did) {
+            super.didBindDevice(result, did);
+            if (result == GizWifiErrorCode.GIZ_SDK_SUCCESS) {
+                // 绑定成功
+                Toast.makeText(MainActivity.this,"恭喜，设备绑定成功",Toast.LENGTH_SHORT).show();
+            } else {
+                // 绑定失败
+                Toast.makeText(MainActivity.this,"绑定失败咯！",Toast.LENGTH_SHORT).show();
+            }
+        }
     };
+
+    private void startBindDevice(GizWifiDevice device) {
+        if(uid!=null && token !=null){
+            //绑定远程设备
+            GizWifiSDK.sharedInstance().bindRemoteDevice(uid,token, device.getMacAddress(),
+                    "35786ce0d056450b8dff3da6e2b08c71",
+                    "0b24bb3a613344589f5aded3bdbc82d5");
+        }
+    }
 }
