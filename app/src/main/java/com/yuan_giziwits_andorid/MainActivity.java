@@ -4,14 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,9 +22,12 @@ import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.gizwits.gizwifisdk.api.GizWifiSDK;
 import com.gizwits.gizwifisdk.enumration.GizEventType;
 import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
+import com.gizwits.gizwifisdk.listener.GizWifiDeviceListener;
 import com.gizwits.gizwifisdk.listener.GizWifiSDKListener;
 import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.yuan_giziwits_andorid.Adapter.LVDevicesAdapter;
 import com.yuan_giziwits_andorid.UI.NetConfigActivity;
@@ -48,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     private QMUITipDialog refleshTipdialog;
     //提示用户刷新成功的弹窗
     private QMUITipDialog mqmuiTipDialog;
+    //用户修改别名的 Dialog
+    private QMUIDialog mDialog_modify_deviceName;
 
 
     @SuppressLint("HandlerLeak")
@@ -110,6 +118,14 @@ public class MainActivity extends AppCompatActivity {
         //调用适配器
         adapter = new LVDevicesAdapter(this,GiziwitsdeviceList);
         lv_BoundDevices.setAdapter(adapter);
+        lv_BoundDevices.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                //把点击条目的设备信息作为参数传递进入
+                showLongDialogOnClick(GiziwitsdeviceList.get(position));
+                return true;
+            }
+        });
 
         //实例化下拉下拉刷新空间，然后初始化
         mSwipeRefreshLayout =findViewById(R.id.SwipeRefreshLayout_ID);
@@ -182,6 +198,68 @@ public class MainActivity extends AppCompatActivity {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         },3000);
+    }
+
+
+    /**
+     * 功能：长按Listview的回调函数,目的：弹窗，修改别名
+     * @param device   需要修改别名的设备
+     */
+    private void showLongDialogOnClick(final GizWifiDevice device) {
+        final String[] items = new String[]{"重命名","解绑设备"};
+       //Toast.makeText(MainActivity.this,"点击",Toast.LENGTH_SHORT).show();
+        new QMUIDialog.MenuDialogBuilder(MainActivity.this)
+                .addItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case 0:
+                                showReDeviceNameDialog(device);
+                                break;
+                            case 1:
+                                break;
+
+                        }
+                        //Toast.makeText(MainActivity.this, "你选择了 " + items[which], Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+
+    }
+
+    /**
+     * 功能：设备重命名的Dialog，弹出输入框
+     * @param device
+     */
+    private void showReDeviceNameDialog(final GizWifiDevice device) {
+        final QMUIDialog.EditTextDialogBuilder builder = new QMUIDialog.EditTextDialogBuilder(MainActivity.this);
+        builder.setTitle("修改设备名字")
+                .setPlaceholder("在此输入别名")
+                .setInputType(InputType.TYPE_CLASS_TEXT)
+                .addAction("取消", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                    }
+                })
+                .addAction("确定", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        String newName = builder.getEditText().getText().toString().trim();
+                        //输入的数据不为空
+                        if (newName != null && newName.length() > 0) {
+                            // device是从设备列表中获取到的设备实体对象
+                            device.setListener(mGizwitDeviceListener);
+                            device.setCustomInfo(null, newName);
+
+                            dialog.dismiss();
+                        } else {  //输入为空
+                            Toast.makeText(MainActivity.this, "请填入别名", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .show();
     }
 
     /**
@@ -321,4 +399,27 @@ public class MainActivity extends AppCompatActivity {
                     "0b24bb3a613344589f5aded3bdbc82d5");
         }
     }
+
+    //*实行设备信息修改的监听，此处监听了别名的修改*/
+    private GizWifiDeviceListener mGizwitDeviceListener = new GizWifiDeviceListener() {
+        @Override
+        public void didSetCustomInfo(GizWifiErrorCode result, GizWifiDevice
+                device) {
+            if (result == GizWifiErrorCode.GIZ_SDK_SUCCESS) {
+                // 修改成功，重新获取网络的设备信息，刷新一个页面
+                if(GizWifiSDK.sharedInstance().getDeviceList().size()!=0){
+                    //把放置设备的集合
+                    GiziwitsdeviceList.clear();
+                    GiziwitsdeviceList.addAll(GizWifiSDK.sharedInstance().getDeviceList());
+                    //通知适配器，更改页面的别名
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(MainActivity.this, "修改成功 " , Toast.LENGTH_SHORT).show();
+                }
+
+            } else {
+                 // 修改失败
+                Toast.makeText(MainActivity.this, "修改失败，请稍后重试 " , Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 }

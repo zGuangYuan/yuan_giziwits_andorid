@@ -87,6 +87,8 @@ public class LVDevicesAdapter extends BaseAdapter {
             }else{
                 viewHolderListView.mTvDeviceState.setText("远程在线");
             }
+            //设置字体大小
+            viewHolderListView.mTvDeviceState.setTextSize(12);
             //设置颜色为深色
             viewHolderListView.mTvDeviceState.setTextColor(mContent.getResources().getColor(R.color.black_color));
             //显示箭头
