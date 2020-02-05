@@ -2,5 +2,6 @@
 <resources>
     <item name="topBar_right_add_icon" type="id"></item>
     <item name="topBar_left_back_icon" type="id"></item>
+    <item name="topBar_right_setting_icon" type="id"></item>
 
 </resources>

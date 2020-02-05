@@ -21,13 +21,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".DevicrControl.LockActivity"/>
-        <activity android:name=".DevicrControl.RGBLightActivity"/>
-        <activity android:name=".DevicrControl.MainDeviceControlActivity"></activity>
+        <activity android:name=".UI.PatternLockViewActivity"></activity>
+        <activity android:name=".DevicrControl.LockActivity" />
+        <activity android:name=".DevicrControl.RGBLightActivity" />
+        <activity android:name=".DevicrControl.MainDeviceControlActivity" />
         <activity android:name=".UI.NetConfigActivity" />
-        <activity android:name=".UI.SplashActivity">
-
-            <!-- 设置为全屏 -->
+        <activity
+            android:name=".UI.SplashActivity"
+            android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

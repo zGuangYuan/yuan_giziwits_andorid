@@ -1,9 +1,15 @@
 <resources>
+    <!--解决APP启动时短暂的白屏界面-->
+    <style name="AppTheme.Launcher" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/ic_welcome_pic</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
     <!--APP基本配置-->
     <style name="AppTheme" parent="QMUI.Compat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
 
         <!-- 配置qmui提供的theme -->
         <item name="qmui_skin_support_topbar_bg">@color/app_color_blue</item>

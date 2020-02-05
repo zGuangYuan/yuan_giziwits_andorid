@@ -25,6 +25,7 @@ public class SharePreferenceUtils {
         //应用
         editor.apply();
     }
+
     /**
      * @param mContext   上下文
      * @param key        键值

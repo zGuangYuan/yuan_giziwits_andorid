@@ -18,8 +18,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.yuan_giziwits_andorid.DevicrControl.MainDeviceControlActivity;
 import com.yuan_giziwits_andorid.MainActivity;
 import com.yuan_giziwits_andorid.R;
+import com.yuan_giziwits_andorid.Utils.SharePreferenceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +47,14 @@ public class SplashActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
         setContentView(R.layout.activity_splash);
+
+
+
         //检查安卓的版本,如果版本低于6.0则，动态申请一些危险权限
         checkAndroidVersin();
     }
@@ -88,7 +97,7 @@ public class SplashActivity extends AppCompatActivity {
         //代表已经全部授权
         if(status==5){
             //弹窗
-            Toast.makeText(this,"所需的权限已经全部开启，无需再次申请！",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this,"所需的权限已经全部开启，无需再次申请！",Toast.LENGTH_SHORT).show();
             //直接跳转到新的Activity
             mHandler.sendEmptyMessageDelayed(107,2500);
         }
@@ -113,7 +122,7 @@ public class SplashActivity extends AppCompatActivity {
                     }
                     if(deniedPermission.isEmpty()){
                         //弹窗
-                        Toast.makeText(this,"所需的权限全部开启！",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(this,"所需的权限全部开启！",Toast.LENGTH_SHORT).show();
                         //1.5s后跳转
                         mHandler.sendEmptyMessageDelayed(107,1500);
 
@@ -128,5 +137,12 @@ public class SplashActivity extends AppCompatActivity {
 
                 }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //进入页面先初始化一下解锁密码
+        SharePreferenceUtils.putString(SplashActivity.this,"m_pasw","01258");
     }
 }
