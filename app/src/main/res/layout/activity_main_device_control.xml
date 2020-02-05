@@ -183,14 +183,14 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_marginLeft="40dp"
-                        android:background="@mipmap/mybtnopen" />
+                        android:background="@mipmap/ic_door_open2" />
 
                     <ImageButton
                         android:id="@+id/IV_closeButtonID"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_marginLeft="80dp"
-                        android:background="@mipmap/mybtnclose" />
+                        android:background="@mipmap/ic_door_close3" />
 
                 </LinearLayout>
 
@@ -217,7 +217,27 @@
                         android:textColor="#ffff00"
                         android:textSize="20dp" />
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textSize="20dp"
+                        android:text="门禁设置" />
+                    <ImageButton
+                        android:id="@+id/IV_DoorSettingButtonID"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:background="@mipmap/ic_door_setting" />
 
+
+
+                </LinearLayout>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="35dp"

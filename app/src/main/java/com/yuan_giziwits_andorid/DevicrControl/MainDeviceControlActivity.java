@@ -4,22 +4,35 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.yuan_giziwits_andorid.R;
 
 public class MainDeviceControlActivity extends AppCompatActivity {
 
     /*变量的声明*/
+    //门禁的密码
+    public static String door_pasw="abc";
 
     //顶层框
     private QMUITopBar DeviceControltopBar;
     //进入七彩灯控制的按钮
     private Button mBtn_EnterColorControl;
+
+    //门禁开、关、设置的ImageButton
+    private ImageButton ib_door_open;
+    private ImageButton ib_door_close;
+    private ImageButton ib_door_setting;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +50,17 @@ public class MainDeviceControlActivity extends AppCompatActivity {
      */
     private void viewInit() {
         //QUMI的 topBar的设置
-        //控件实例化
+        /*控件实例化*/
+        //topbar控件
         DeviceControltopBar = findViewById(R.id.DeviceControl_topBar_ID);
-
+        //七彩灯控制控件
         mBtn_EnterColorControl =findViewById(R.id.color_control_enter_ID);
+        //门禁开关设置控件
+        ib_door_open = (ImageButton) findViewById(R.id.IV_ButtonID);
+        ib_door_close= (ImageButton) findViewById(R.id.IV_closeButtonID);
+        ib_door_setting =(ImageButton)findViewById(R.id.IV_DoorSettingButtonID);
+
+        /*设置控制界面的topbar*/
         DeviceControltopBar.setTitle("设备控制界面");
         DeviceControltopBar.addLeftImageButton(R.mipmap.ic_back,R.id.topBar_right_add_icon).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +69,7 @@ public class MainDeviceControlActivity extends AppCompatActivity {
             }
         });
 
+        /*进入七彩灯控制的按钮*/
         mBtn_EnterColorControl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +77,47 @@ public class MainDeviceControlActivity extends AppCompatActivity {
             }
         });
 
+
+        /*绑定门禁按钮开的监听器*/
+        ib_door_open.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //startActivity(new Intent(MainDeviceControlActivity.this,LockActivity.class));
+                //试一下使用弹窗的方法
+                keyBoardThePsw();
+            }
+        });
+
+
+    }
+
+    /**
+     * 功能：弹窗输入密码
+     */
+    private void keyBoardThePsw() {
+        final QMUIDialog.EditTextDialogBuilder builder = new QMUIDialog.EditTextDialogBuilder(MainDeviceControlActivity.this);
+        builder.setTitle("标题")
+                .setPlaceholder("在此输入您的昵称")
+                .setInputType(InputType.TYPE_CLASS_TEXT)
+                .addAction("取消", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                    }
+                })
+                .addAction("确定", new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        CharSequence text = builder.getEditText().getText();
+                        if (text != null && text.length() > 0) {
+                            Toast.makeText(MainDeviceControlActivity.this, "您的昵称: " + text, Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(MainDeviceControlActivity.this, "请填入昵称", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .show();
     }
 
 }

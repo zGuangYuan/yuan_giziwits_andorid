@@ -34,18 +34,11 @@ public class LockActivity extends AppCompatActivity {
     private Button cancle_Button;
     private String mpassward="abc";
 
-    String softssid, uid, token;
-    /**
-     * 判断用户登录状态 0：未登录 1：实名用户登录 2：匿名用户登录 3：匿名用户登录中 4：匿名用户登录中断
-     */
-    public static int loginStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lock);
-        //initDevice();
-        //setActionBar(true, true, device.getProductName());
         initview();
 
     }
@@ -109,9 +102,7 @@ public class LockActivity extends AppCompatActivity {
         ed_passwd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int i, int i1, int i2) {
                 mpassward = s.toString();
@@ -136,11 +127,8 @@ public class LockActivity extends AppCompatActivity {
             case android.R.id.home:
                 this.finish();
                 break;
-
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
 
