@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -162,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)  //显示类型
                         .create();
                 refleshTipdialog.show();
-                //下拉控件出发之后最多3s后消失
+                //下拉控件出发之后最多3s后消失,这里面可以在主线程调用
                 mSwipeRefreshLayout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -175,19 +178,41 @@ public class MainActivity extends AppCompatActivity {
                         //两个刷新的控件消失
                         refleshTipdialog.dismiss();
                         mSwipeRefreshLayout.setRefreshing(false);
-                        //显示另外一个弹窗，通知用户刷新成功或者失败
-                        if(GiziwitsdeviceList.size() == 0){
+
+                        //获取网络状态
+                        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+                        //获取到手机处于断开网络状态
+                        if(info  == null  || !info.isConnected()){
+                            Log.e("yuan12312","网络断开！");
                             mqmuiTipDialog = new QMUITipDialog.Builder(MainActivity.this)
-                                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_NOTHING)
-                                    .setTipWord("暂无设备")
+                                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_FAIL)
+                                    .setTipWord("获取失败，请检查手机网络！")
                                     .create();
                             mqmuiTipDialog.show();
-                        }else{
-                            mqmuiTipDialog = new QMUITipDialog.Builder(MainActivity.this)
-                                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
-                                    .setTipWord("获取成功")
-                                    .create();
-                            mqmuiTipDialog.show();
+                            //把ListView隐藏，不可点击
+                            lv_BoundDevices.setVisibility(View.INVISIBLE);
+
+
+
+                        }else{   //有网络
+
+                            lv_BoundDevices.setVisibility(View.VISIBLE);
+                            //显示另外一个弹窗，通知用户刷新成功或者失败
+                            if(GiziwitsdeviceList.size() == 0){
+                                mqmuiTipDialog = new QMUITipDialog.Builder(MainActivity.this)
+                                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_NOTHING)
+                                        .setTipWord("暂无设备")
+                                        .create();
+                                mqmuiTipDialog.show();
+                            }else{
+                                mqmuiTipDialog = new QMUITipDialog.Builder(MainActivity.this)
+                                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
+                                        .setTipWord("获取成功")
+                                        .create();
+                                mqmuiTipDialog.show();
+                            }
+
                         }
                         //显示获取成功之后 1.5s把这个标志取消掉
                         mSwipeRefreshLayout.postDelayed(new Runnable() {
@@ -196,10 +221,8 @@ public class MainActivity extends AppCompatActivity {
                                 mqmuiTipDialog.dismiss();
                             }
                         },1500);
-
-
                     }
-                },3000);
+                },1000);
             }
         });
     }

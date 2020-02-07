@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -127,16 +129,18 @@ public class MainDeviceControlActivity extends BaseDeviceControlActivity {
     //测试用
     private TextView mTv_data_temp;
     private TextView mTv_data_hum;
-
+    private CheckBox mCheckbox01_ID;
 
     //定义临时的全局变量,存储分析网络获取的点
     private int LED_R;
     private int LED_G;
     private int LED_B;
+    private boolean power=false;
 
 
     //定义网络的数据点不可被修改所以用final被修饰
     private static final String KEY_LED_R = "LED_R";
+    private static final String KEY_POWER = "power";
 
 
 
@@ -157,6 +161,13 @@ public class MainDeviceControlActivity extends BaseDeviceControlActivity {
     private void upDateUI() {
         Log.e("yuan12312","红色值:"+LED_R);
         mTv_data_temp.setText(String.valueOf(LED_R));
+
+        //同步云端的数据到UI上
+        if(power == true){
+            mCheckbox01_ID.setChecked(true);
+        }else {
+            mCheckbox01_ID.setChecked(false);
+        }
     }
 
 
@@ -200,7 +211,18 @@ public class MainDeviceControlActivity extends BaseDeviceControlActivity {
         //测试使用
         mTv_data_temp = (TextView) findViewById(R.id.tv_data_temp);
         mTv_data_hum = (TextView) findViewById(R.id.tv_data_hum);
+        mCheckbox01_ID = (CheckBox) findViewById(R.id.checkbox01_ID);
 
+        mCheckbox01_ID.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    sendCommendToCloud(KEY_POWER,true);
+                }else{
+                    sendCommendToCloud(KEY_POWER,false);
+                }
+            }
+        });
 
 
 
@@ -351,6 +373,10 @@ public class MainDeviceControlActivity extends BaseDeviceControlActivity {
                 if(dataKey.equals(KEY_LED_R)){
                     //把数据点拿出来保存至本地
                     LED_R = (int) MaindataMap.get(KEY_LED_R);
+                }
+                if(dataKey.equals(KEY_POWER)){
+                    //把数据点拿出来保存至本地,然后本地一下云端的按钮
+                    power = (boolean) MaindataMap.get(KEY_POWER);
                 }
             }
             //通知更新UI

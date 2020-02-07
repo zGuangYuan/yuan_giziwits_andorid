@@ -1,7 +1,12 @@
 package com.yuan_giziwits_andorid.DevicrControl;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,6 +24,7 @@ import com.gizwits.gizwifisdk.listener.GizWifiDeviceListener;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.yuan_giziwits_andorid.Utils.WifiAdminUtils;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -31,6 +37,8 @@ public abstract class BaseDeviceControlActivity extends AppCompatActivity {
     protected QMUITipDialog mQMUITipDialog;
     //顶层topBar
     protected QMUITopBar mTopBar;
+    //网络状态广播
+    private NetWorkChangedReceiver netWorkChangedReceiver;
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler(){
@@ -51,7 +59,7 @@ public abstract class BaseDeviceControlActivity extends AppCompatActivity {
                     public void run() {
                         mQMUITipDialog.dismiss();
                     }
-                },1500);
+                },1000);
             }else if(msg.what==121){
                 mQMUITipDialog = new QMUITipDialog.Builder(BaseDeviceControlActivity.this)
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_FAIL)
@@ -72,16 +80,25 @@ public abstract class BaseDeviceControlActivity extends AppCompatActivity {
     };
 
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initDevice();
+        //注册广播
+        initNetBrocastReceiver();
     }
+
+    protected  void initNetBrocastReceiver(){
+
+        netWorkChangedReceiver = new NetWorkChangedReceiver();
+        //此处表示拦截安卓系统网络状态改变的广播
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+
+        registerReceiver(netWorkChangedReceiver,intentFilter);
+
+    }
+
 
     /**
      * 获取订阅的对象并初始化一些参数
@@ -148,9 +165,11 @@ public abstract class BaseDeviceControlActivity extends AppCompatActivity {
                 其他为失败。失败时，dataMap 为空字典*/
             if(result == GizWifiErrorCode.GIZ_SDK_SUCCESS){
                 //如果成功说明打dataMap不为空，那么就可以接受云端发送的信息了
-                mHandler.sendEmptyMessage(122);
-                receiveCloudData(dataMap);
-                Log.e("yuan12312","接受云端的数据:"+dataMap);
+                if(!dataMap.isEmpty()){
+                    mHandler.sendEmptyMessage(122);
+                    receiveCloudData(dataMap);
+                    Log.e("yuan12312","接受云端的数据:"+dataMap);
+                }
             }
         }
 
@@ -172,11 +191,50 @@ public abstract class BaseDeviceControlActivity extends AppCompatActivity {
                 //则退出控制界面
                 mHandler.sendEmptyMessage(121);
             }
-
             Log.e("yuan12312","didUpdateNetStatus:"+netStatus);
-
         }
     };
+
+     /**
+     * 下发控制的封装函数
+     * @param key   设置的键（标志名）：和云端对应
+     * @param value 设置的值
+     */
+    protected void sendCommendToCloud(String key,Object value){
+        if(value == null)
+            return;
+        ConcurrentHashMap<String, Object> dataMap = new ConcurrentHashMap<>();
+        dataMap.put(key,value);
+        //推送到云端
+        mDevice.write(dataMap,5);
+    }
+
+    //内部类，获取手机网络状态发生变化的广播
+    private class NetWorkChangedReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
+            NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+            //获取到手机处于断开网络状态
+            if(info  == null  || !info.isConnected()){
+                Log.e("yuan12312","网络断开！");
+
+            }
+            //切换到移动网络
+            if(info.getType() ==ConnectivityManager.TYPE_MOBILE){
+                Log.e("yuan12312","切换到移动网络！");
+            }
+            //处于WiFi的网络
+            if(info.getType()==ConnectivityManager.TYPE_WIFI){
+                Log.e("yuan12312","切换到WiFi网络！");
+            }
+            if(info == null){
+                return;
+            }
+
+        }
+    }
 
     @Override
     protected void onDestroy() {
@@ -184,5 +242,7 @@ public abstract class BaseDeviceControlActivity extends AppCompatActivity {
         //退出之后，取消订阅云端消息
         mDevice.setListener(null);
         mDevice.setSubscribe("0b24bb3a613344589f5aded3bdbc82d5",false);
+        //取消广播的监听
+        unregisterReceiver(netWorkChangedReceiver);
     }
 }
