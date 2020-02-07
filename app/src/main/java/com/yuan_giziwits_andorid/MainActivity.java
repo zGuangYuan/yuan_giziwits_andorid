@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private LVDevicesAdapter adapter;
     //创建一个集合变量，用于存放机智云绑定设备列表的信息
     private List<GizWifiDevice> GiziwitsdeviceList;
-    //变量的声明
+    //下拉刷新
     private SwipeRefreshLayout mSwipeRefreshLayout;
     //刷新的弹窗
     private QMUITipDialog refleshTipdialog;
@@ -202,13 +202,6 @@ public class MainActivity extends AppCompatActivity {
                 },3000);
             }
         });
-//        //3s之后自从收回刷新状态
-//        lv_BoundDevices.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                mSwipeRefreshLayout.setRefreshing(false);
-//            }
-//        },3000);
     }
 
     /**

@@ -111,8 +111,13 @@ public abstract class BaseDeviceControlActivity extends AppCompatActivity {
                             .setTipWord("同步失败，请检查网络！")
                             .create();
                     mQMUITipDialog.show();
-                    //退出控制界面
-                    finish();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            //退出控制界面
+                            finish();
+                        }
+                    },1500);
                 }
 
             }
