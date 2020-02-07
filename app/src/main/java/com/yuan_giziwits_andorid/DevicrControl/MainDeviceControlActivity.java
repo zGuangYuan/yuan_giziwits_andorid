@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -13,21 +14,26 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
+import com.yuan_giziwits_andorid.MainActivity;
 import com.yuan_giziwits_andorid.R;
 import com.yuan_giziwits_andorid.UI.PatternLockViewActivity;
 import com.yuan_giziwits_andorid.Utils.SharePreferenceUtils;
 
-public class MainDeviceControlActivity extends AppCompatActivity {
+import java.util.concurrent.ConcurrentHashMap;
+
+/*继承自父类，其中父类有一个从上一个界面获取对象的一个方法
+* 即使在这个类中不调用。也就自动执行。*/
+public class MainDeviceControlActivity extends BaseDeviceControlActivity {
 
     /*变量的声明*/
-    //门禁的密码
-    public static String door_pasw="abc";
 
-    //顶层框
-    private QMUITopBar DeviceControltopBar;
+    ConcurrentHashMap<String, Object> dataMap;
+
+    //顶层框由父类继承
     //进入七彩灯控制的按钮
     private Button mBtn_EnterColorControl;
 
@@ -51,7 +57,12 @@ public class MainDeviceControlActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_device_control);
         //控件初始化
         viewInit();
+
     }
+
+
+
+
     /**
      * 功能：控件初始化及其各个按钮的事件的监听
      */
@@ -59,7 +70,7 @@ public class MainDeviceControlActivity extends AppCompatActivity {
         //QUMI的 topBar的设置
         /*控件实例化*/
         //topbar控件
-        DeviceControltopBar = findViewById(R.id.DeviceControl_topBar_ID);
+        mTopBar = findViewById(R.id.DeviceControl_topBar_ID);
         //七彩灯控制控件
         mBtn_EnterColorControl =findViewById(R.id.color_control_enter_ID);
         //门禁开关设置控件
@@ -68,8 +79,21 @@ public class MainDeviceControlActivity extends AppCompatActivity {
         ib_door_setting =(ImageButton)findViewById(R.id.IV_DoorSettingButtonID);
 
         /*设置控制界面的topbar*/
-        DeviceControltopBar.setTitle("设备控制界面");
-        DeviceControltopBar.addLeftImageButton(R.mipmap.ic_back,R.id.topBar_right_add_icon).setOnClickListener(new View.OnClickListener() {
+        //设置的标题是设备的别名或者项目的名字，如果别名为空则显示项目的名字
+          //注意这个mDevice是父类实现的，所以在这个类也会继承下来
+//        if(mDevice.getAlias().isEmpty()){
+//            //别名为空,设置为产品的名字
+//            DeviceControltopBar.setTitle(mDevice.getProductName()+" 设置控制界面");
+//        }else{
+//            //设置为别名
+//            DeviceControltopBar.setTitle(mDevice.getAlias()+" 的设备控制界面");
+//        }
+        //判断别名是否为空，空则选择别名
+        String deviceTitle = mDevice.getAlias().isEmpty()?mDevice.getProductName():mDevice.getAlias();
+        mTopBar.setTitle(deviceTitle+" 的设备控制界面");
+
+
+        mTopBar.addLeftImageButton(R.mipmap.ic_back,R.id.topBar_right_add_icon).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -111,5 +135,16 @@ public class MainDeviceControlActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+    }
+
+
+    /**
+     * 复写父类的方法，调用云端数据
+     * @param dataMap 保存云端传回来的数据，可控子类调用的方法
+     */
+    @Override
+    protected void receiveCloudData(ConcurrentHashMap<String, Object> dataMap) {
+        super.receiveCloudData(dataMap);
+        Log.e("yuan12312","子类调用云端数据:"+dataMap);
     }
 }

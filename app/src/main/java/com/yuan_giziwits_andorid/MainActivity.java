@@ -217,11 +217,13 @@ public class MainActivity extends AppCompatActivity {
      */
     private void showTouchDialogOnClick(GizWifiDevice device) {
         if(device.getNetStatus() == GizWifiDeviceNetStatus.GizDeviceOffline){
+            Toast.makeText(MainActivity.this,"！当前设备处于离线状态，请检查设备是否上电！",Toast.LENGTH_SHORT).show();
             return;
         }else{  //在线
             // mDevice 是从设备列表中获取到的设备实体对象
             device.setListener(mGizwitDeviceListener);  //注意监听类是Device的
-            device.setSubscribe("0b24bb3a613344589f5aded3bdbc82d5",true); // 订阅设备
+            //订阅设备
+            device.setSubscribe("0b24bb3a613344589f5aded3bdbc82d5",true);
         }
     }
 
@@ -521,14 +523,14 @@ public class MainActivity extends AppCompatActivity {
         public void didSetSubscribe(GizWifiErrorCode result, GizWifiDevice device, boolean isSubscribed) {
             super.didSetSubscribe(result, device, isSubscribed);
             if (result == GizWifiErrorCode.GIZ_SDK_SUCCESS) {
-                // 订阅或解除订阅成功
-                Toast.makeText(MainActivity.this, "订阅设备成功 " , Toast.LENGTH_SHORT).show();
-                //进入设备控制界面
-                startActivity(new Intent(MainActivity.this, MainDeviceControlActivity.class));
+                //Toast.makeText(MainActivity.this, "订阅设备成功 " , Toast.LENGTH_SHORT).show();
+                //把订阅成功的对象放进initent传给控制界面,并跳转到另一个界面
+                Intent intent =new Intent(MainActivity.this,MainDeviceControlActivity.class);
+                intent.putExtra("yuan_device01",device);
+                startActivity(intent);
 
             } else {
                 // 失败
-                Toast.makeText(MainActivity.this, "订阅设备失败！ " , Toast.LENGTH_SHORT).show();
             }
         }
     };

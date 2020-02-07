@@ -25,6 +25,9 @@
         <activity android:name=".DevicrControl.LockActivity" />
         <activity android:name=".DevicrControl.RGBLightActivity" />
         <activity android:name=".DevicrControl.MainDeviceControlActivity" />
+
+
+
         <activity android:name=".UI.NetConfigActivity" />
         <activity
             android:name=".UI.SplashActivity"
