@@ -21,13 +21,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".UI.PatternLockViewActivity"></activity>
+        <activity android:name=".DevicrControl.SecondDeviceCtrlActivity"></activity>
+        <activity android:name=".UI.PatternLockViewActivity" />
         <activity android:name=".DevicrControl.LockActivity" />
         <activity android:name=".DevicrControl.RGBLightActivity" />
         <activity android:name=".DevicrControl.MainDeviceControlActivity" />
-
-
-
         <activity android:name=".UI.NetConfigActivity" />
         <activity
             android:name=".UI.SplashActivity"

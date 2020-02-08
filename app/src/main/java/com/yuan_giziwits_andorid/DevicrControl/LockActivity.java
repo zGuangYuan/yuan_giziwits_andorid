@@ -169,7 +169,7 @@ public class LockActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 mqmuiTipDialog.dismiss();
-                                startActivity(new Intent(LockActivity.this,MainDeviceControlActivity.class));
+                                //startActivity(new Intent(LockActivity.this,MainDeviceControlActivity.class));
                             }
                         },1500);
                     }

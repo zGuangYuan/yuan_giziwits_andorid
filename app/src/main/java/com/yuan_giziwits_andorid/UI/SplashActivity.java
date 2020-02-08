@@ -143,6 +143,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //进入页面先初始化一下解锁密码
-        SharePreferenceUtils.putString(SplashActivity.this,"m_pasw","01258");
+        //SharePreferenceUtils.putString(SplashActivity.this,"m_pasw","03678");
     }
 }

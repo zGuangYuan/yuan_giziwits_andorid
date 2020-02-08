@@ -24,6 +24,7 @@ import com.gizwits.gizwifisdk.listener.GizWifiDeviceListener;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.yuan_giziwits_andorid.Utils.Constant;
 import com.yuan_giziwits_andorid.Utils.WifiAdminUtils;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -235,14 +236,21 @@ public abstract class BaseDeviceControlActivity extends AppCompatActivity {
 
         }
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         //退出之后，取消订阅云端消息
         mDevice.setListener(null);
-        mDevice.setSubscribe("0b24bb3a613344589f5aded3bdbc82d5",false);
         //取消广播的监听
         unregisterReceiver(netWorkChangedReceiver);
+        //取消设备的订阅
+        switch (mDevice.getProductKey()) {
+            case Constant.FIRST_PK:
+                mDevice.setSubscribe(Constant.FIRST_PS, false);
+                break;
+            case Constant.SECOND_PK:
+                mDevice.setSubscribe(Constant.SECOND_PS, false);
+                break;
+        }
     }
 }

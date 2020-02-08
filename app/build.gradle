@@ -26,7 +26,7 @@ android {
 }
 
 dependencies {
-      /* 其他依赖*/
+    /* 其他依赖*/
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
