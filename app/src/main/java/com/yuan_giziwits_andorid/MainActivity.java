@@ -4,16 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -35,6 +39,9 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.yuan_giziwits_andorid.Adapter.LVDevicesAdapter;
 import com.yuan_giziwits_andorid.DevicrControl.MainDeviceControlActivity;
 import com.yuan_giziwits_andorid.DevicrControl.SecondDeviceCtrlActivity;
+import com.yuan_giziwits_andorid.LOCK.PaswSettingActivity;
+import com.yuan_giziwits_andorid.LOCK.WelcomeLockActivity;
+import com.yuan_giziwits_andorid.Quit.MyApplication;
 import com.yuan_giziwits_andorid.UI.NetConfigActivity;
 import com.yuan_giziwits_andorid.Utils.Constant;
 import com.yuan_giziwits_andorid.Utils.L;
@@ -103,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 添加Activity到堆栈
+        MyApplication.getInstance().addActivity(this);
+
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -153,6 +163,17 @@ public class MainActivity extends AppCompatActivity {
                         }).show();
             }
         });
+        //topbar左边设置密码的按钮
+        mQMUItopBar.addLeftImageButton(R.mipmap.ic_setting2,R.id.topBar_pasw_setting_icon).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, PaswSettingActivity.class));
+            }
+        });
+
+
+
+
 
 
         //设置下拉的颜色
@@ -675,4 +696,30 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+    /**
+     * 返回按键的监听
+     */
+    private boolean mIsExit;
+    /**双击返回键退出*/
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mIsExit) {
+                //this.finish();
+                MyApplication.getInstance().exit();
+            } else {
+                Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                mIsExit = true;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mIsExit = false;
+                    }
+                }, 2000);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

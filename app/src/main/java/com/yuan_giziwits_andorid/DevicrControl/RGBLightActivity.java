@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
+import com.yuan_giziwits_andorid.Quit.MyApplication;
 import com.yuan_giziwits_andorid.R;
 
 
@@ -44,6 +45,10 @@ public class RGBLightActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 添加Activity到堆栈，退出用
+        MyApplication.getInstance().addActivity(this);
+
         setContentView(R.layout.activity_rgblight);
         initview();
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/colorlight_control_on"
+    <item android:drawable="@drawable/btn_00"
         android:state_checked="true"></item>
-    <item android:drawable="@drawable/colorlight_control_off"
+    <item android:drawable="@drawable/btn03"
         android:state_checked="false"></item>
 </selector>

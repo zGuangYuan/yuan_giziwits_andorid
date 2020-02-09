@@ -24,6 +24,7 @@ import com.gizwits.gizwifisdk.listener.GizWifiDeviceListener;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.yuan_giziwits_andorid.Quit.MyApplication;
 import com.yuan_giziwits_andorid.Utils.Constant;
 import com.yuan_giziwits_andorid.Utils.WifiAdminUtils;
 
@@ -85,6 +86,10 @@ public abstract class BaseDeviceControlActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 添加Activity到堆栈,退出用
+        MyApplication.getInstance().addActivity(this);
+
         initDevice();
         //注册广播
         initNetBrocastReceiver();

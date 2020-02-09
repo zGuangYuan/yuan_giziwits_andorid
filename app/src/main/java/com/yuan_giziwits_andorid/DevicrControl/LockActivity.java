@@ -26,6 +26,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.yuan_giziwits_andorid.MainActivity;
+import com.yuan_giziwits_andorid.Quit.MyApplication;
 import com.yuan_giziwits_andorid.R;
 import com.yuan_giziwits_andorid.UI.NetConfigActivity;
 import com.yuan_giziwits_andorid.UI.SplashActivity;
@@ -57,6 +58,9 @@ public class LockActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 添加Activity到堆栈，退出用
+        MyApplication.getInstance().addActivity(this);
         //设置为全屏
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -122,7 +126,6 @@ public class LockActivity extends AppCompatActivity {
 
                        }
 
-
                     }else{
                         Toast.makeText(LockActivity.this,"原密码输入错误",Toast.LENGTH_SHORT).show();
                     }
@@ -157,6 +160,9 @@ public class LockActivity extends AppCompatActivity {
                         //修改密码
                         SharePreferenceUtils.putString(LockActivity.this,"m_pasw",new_paw);
 
+                        //清空编辑框
+                        mEt_origin_paw.setText("");
+                        mEt_new_paw.setText("");
                         dialog.dismiss();
                         //提示语，提升用户体验
                         mqmuiTipDialog = new QMUITipDialog.Builder(LockActivity.this)
@@ -169,6 +175,7 @@ public class LockActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 mqmuiTipDialog.dismiss();
+                                finish();
                                 //startActivity(new Intent(LockActivity.this,MainDeviceControlActivity.class));
                             }
                         },1500);

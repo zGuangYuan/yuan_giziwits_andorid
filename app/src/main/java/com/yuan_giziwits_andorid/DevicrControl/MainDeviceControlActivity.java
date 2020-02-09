@@ -27,6 +27,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.yuan_giziwits_andorid.MainActivity;
+import com.yuan_giziwits_andorid.Quit.MyApplication;
 import com.yuan_giziwits_andorid.R;
 import com.yuan_giziwits_andorid.UI.PatternLockViewActivity;
 import com.yuan_giziwits_andorid.Utils.SharePreferenceUtils;
@@ -174,6 +175,9 @@ public class MainDeviceControlActivity extends BaseDeviceControlActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 添加Activity到堆栈，退出用
+        MyApplication.getInstance().addActivity(this);
         //设置为全屏
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,

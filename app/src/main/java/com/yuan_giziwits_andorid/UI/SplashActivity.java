@@ -14,12 +14,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.yuan_giziwits_andorid.DevicrControl.LockActivity;
 import com.yuan_giziwits_andorid.DevicrControl.MainDeviceControlActivity;
+import com.yuan_giziwits_andorid.LOCK.WelcomeLockActivity;
 import com.yuan_giziwits_andorid.MainActivity;
+import com.yuan_giziwits_andorid.Quit.MyApplication;
 import com.yuan_giziwits_andorid.R;
 import com.yuan_giziwits_andorid.Utils.SharePreferenceUtils;
 
@@ -35,8 +39,8 @@ public class SplashActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if(msg.what == 107){
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                finish();
+                startActivity(new Intent(SplashActivity.this, WelcomeLockActivity.class));
+                //finish();
 
             }
         }
@@ -44,6 +48,10 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 添加Activity到堆栈
+        MyApplication.getInstance().addActivity(this);
+
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -52,6 +60,8 @@ public class SplashActivity extends AppCompatActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
         setContentView(R.layout.activity_splash);
+
+
 
 
 
@@ -142,7 +152,9 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //进入页面先初始化一下解锁密码
-        //SharePreferenceUtils.putString(SplashActivity.this,"m_pasw","03678");
+        //进入页面先初始化一下进入软件的解锁密码
+        //SharePreferenceUtils.putString(SplashActivity.this,"enter_pasw","01258");
     }
+
+
 }

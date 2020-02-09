@@ -32,6 +32,7 @@ import com.gizwits.gizwifisdk.listener.GizWifiSDKListener;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.yuan_giziwits_andorid.MainActivity;
+import com.yuan_giziwits_andorid.Quit.MyApplication;
 import com.yuan_giziwits_andorid.R;
 import com.yuan_giziwits_andorid.Utils.SharePreferenceUtils;
 import com.yuan_giziwits_andorid.Utils.WifiAdminUtils;
@@ -79,6 +80,9 @@ public class NetConfigActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 添加Activity到堆栈
+        MyApplication.getInstance().addActivity(this);
         //全屏显示
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
