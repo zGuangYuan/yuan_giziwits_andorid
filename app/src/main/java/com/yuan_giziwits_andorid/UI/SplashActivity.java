@@ -7,25 +7,19 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.yuan_giziwits_andorid.DevicrControl.LockActivity;
-import com.yuan_giziwits_andorid.DevicrControl.MainDeviceControlActivity;
 import com.yuan_giziwits_andorid.LOCK.WelcomeLockActivity;
-import com.yuan_giziwits_andorid.MainActivity;
 import com.yuan_giziwits_andorid.Quit.MyApplication;
 import com.yuan_giziwits_andorid.R;
-import com.yuan_giziwits_andorid.Utils.SharePreferenceUtils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,10 +35,9 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.yuan_giziwits_andorid.Adapter.LVDevicesAdapter;
-import com.yuan_giziwits_andorid.DevicrControl.MainDeviceControlActivity;
-import com.yuan_giziwits_andorid.DevicrControl.SecondDeviceCtrlActivity;
+import com.yuan_giziwits_andorid.UI.DevicrControl.ColorSeekBar.ColorSeekBarActivity;
+import com.yuan_giziwits_andorid.UI.DevicrControl.MainDeviceControlActivity;
 import com.yuan_giziwits_andorid.LOCK.PaswSettingActivity;
-import com.yuan_giziwits_andorid.LOCK.WelcomeLockActivity;
 import com.yuan_giziwits_andorid.Quit.MyApplication;
 import com.yuan_giziwits_andorid.UI.NetConfigActivity;
 import com.yuan_giziwits_andorid.Utils.Constant;
@@ -116,6 +113,10 @@ public class MainActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //设置沉浸式状态栏
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
         setContentView(R.layout.activity_main);
         //初始化SDK
         initSDK();
@@ -687,7 +688,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     //定时开关灯
                     case Constant.SECOND_PK:
-                        intent.setClass(MainActivity.this, SecondDeviceCtrlActivity.class);
+                        //智能灯控制实验
+                        intent.setClass(MainActivity.this, ColorSeekBarActivity.class);
                         startActivity(intent);
                         break;
                 }

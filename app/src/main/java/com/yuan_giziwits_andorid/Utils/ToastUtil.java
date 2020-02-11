@@ -1,4 +1,4 @@
-package com.yuan_giziwits_andorid.DevicrControl;
+package com.yuan_giziwits_andorid.Utils;
 
 import android.content.Context;
 import android.widget.Toast;

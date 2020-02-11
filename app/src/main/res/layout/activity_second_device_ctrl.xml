@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DevicrControl.SecondDeviceCtrlActivity"
+    tools:context=".UI.DevicrControl.SecondDeviceCtrlActivity"
     android:background="@mipmap/bg_00">
     <com.qmuiteam.qmui.widget.QMUITopBar
         android:id="@+id/SecondDeviceControl_topBar_ID"

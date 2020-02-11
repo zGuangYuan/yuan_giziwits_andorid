@@ -21,10 +21,22 @@ public class Constant {
     //七彩智能产品密钥
     public static final String FIRST_PS = "0b24bb3a613344589f5aded3bdbc82d5";
 
-    //综合项目产品Key
-    public static final String SECOND_PK = "cc5da7311ccc4b4688c10a8ef560922f";
+//    //综合项目产品Key
+//    public static final String SECOND_PK = "cc5da7311ccc4b4688c10a8ef560922f";
+//    // 综合项目产品Key产品密钥
+//    public static final String SECOND_PS = "e7ee60adc13e4f908feb61f432997561";
+
+
+        //综合项目产品Key
+    public static final String SECOND_PK = "364e8b9c922546e8b10b80e241248402";
     // 综合项目产品Key产品密钥
-    public static final String SECOND_PS = "e7ee60adc13e4f908feb61f432997561";
+    public static final String SECOND_PS = "df276a5cb0a4458badde8b04952478e2";
+
+    //综合项目产品Key
+    public static final String THIRD_PK = "364e8b9c922546e8b10b80e241248402";
+    // 综合项目产品Key产品密钥
+    public static final String THIRD_PS = "df276a5cb0a4458badde8b04952478e2";
+
 
 
 }

@@ -1,14 +1,16 @@
-package com.yuan_giziwits_andorid.DevicrControl;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.yuan_giziwits_andorid.UI.DevicrControl;
 
 import android.os.Bundle;
 import android.view.View;
 
+import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.yuan_giziwits_andorid.Quit.MyApplication;
 import com.yuan_giziwits_andorid.R;
 
 public class SecondDeviceCtrlActivity extends BaseDeviceControlActivity {
+
+    //顶层框
+    private QMUITopBar mTopBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

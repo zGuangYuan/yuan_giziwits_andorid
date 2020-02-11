@@ -1,4 +1,64 @@
 <resources>
     <string name="App_name"> "智慧家"</string>
 
+    <!-- ControlActivity -->
+    <string name="consumption">用电量：</string>
+    <string name="degree">度</string>
+    <string name="reservation">预约</string>
+    <string name="device_no_ready">设备无响应，请检查设备是否正常工作</string>
+    <string name="device_dropped">连接已断开</string>
+    <string name="wait_for_connet">正在等待连接</string>
+    <string name="title_dot">...</string>
+    <string name="openlight">开灯</string>
+    <string name="closelight">关灯</string>
+    <string name="delay_turn_off">延时关灯:</string>
+    <string name="txt">:</string>
+    <string name="brightness">亮度</string>
+    <!-- scheduleActivity -->
+    <string name="apm_schedule">预约</string>
+    <string name="apm_timing_schedule">定时预约</string>
+    <string name="apm_delay_schedule">延时关闭</string>
+    <string name="apm_start_time">开启时间</string>
+    <string name="apm_end_time">关闭时间</string>
+    <string name="apm_repeat">重复</string>
+    <string name="apm_set_time">时间设置</string>
+    <string name="updata_fail">当前网络不佳，请稍候再试! </string>
+    <string name="apm_mon">周一</string>
+    <string name="apm_tue">周二</string>
+    <string name="apm_wed">周三</string>
+    <string name="apm_thu">周四</string>
+    <string name="apm_fri">周五</string>
+    <string name="apm_sat">周六</string>
+    <string name="apm_sun">周日</string>
+    <string name="apm_every_mon">每周一</string>
+    <string name="apm_every_tue">每周二</string>
+    <string name="apm_every_wed">每周三</string>
+    <string name="apm_every_thu">每周四</string>
+    <string name="apm_every_fri">每周五</string>
+    <string name="apm_every_sat">每周六</string>
+    <string name="apm_every_sun">每周日</string>
+    <string name="apm_time_same">开启与关闭时间不能相同</string>
+    <string name="apm_hour">时</string>
+    <string name="apm_min">分</string>
+    <string name="apm_min_later">分钟后</string>
+    <string name="apm_delay_time_setting">倒计时完毕后，设备将自动关闭。</string>
+    <string name="apm_status_open">开启</string>
+    <string name="apm_status_close">关闭</string>
+    <string name="apm_today">今天 | 仅一次</string>
+    <string name="apm_tomorrow">明天 | 仅一次</string>
+    <string name="apm_every_day">每天</string>
+    <string name="apm_once">仅一次</string>
+    <string name="apm_add">添加预约</string>
+    <string name="apm_action">动作</string>
+    <string name="apm_time">定时</string>
+    <string name="apm_no_rule">暂无定时预约任务</string>
+    <string name="apm_delete">删除</string>
+
+    <!-- scheduleOnsite -->
+    <string name="site_setting_time">正在预约更新，请稍候</string>
+    <string name="site_before_close_time">关闭时间必须晚于开启时间</string>
+    <string name="site_later_now_time">开启时间必须晚于当前时间</string>
+    <string name="site_schedule_success">预约成功</string>
+    <string name="site_schedule_fail">预约失败</string>
+
 </resources>

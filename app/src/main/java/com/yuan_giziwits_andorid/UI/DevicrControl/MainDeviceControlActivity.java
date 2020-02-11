@@ -1,6 +1,5 @@
-package com.yuan_giziwits_andorid.DevicrControl;
+package com.yuan_giziwits_andorid.UI.DevicrControl;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
@@ -9,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -19,18 +17,15 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.qmuiteam.qmui.widget.QMUITopBar;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
-import com.yuan_giziwits_andorid.MainActivity;
+import com.yuan_giziwits_andorid.LOCK.LockActivity;
 import com.yuan_giziwits_andorid.Quit.MyApplication;
 import com.yuan_giziwits_andorid.R;
-import com.yuan_giziwits_andorid.UI.PatternLockViewActivity;
-import com.yuan_giziwits_andorid.Utils.SharePreferenceUtils;
+import com.yuan_giziwits_andorid.LOCK.PatternLockViewActivity;
+import com.yuan_giziwits_andorid.UI.DevicrControl.SubMainActivity.RGBLightActivity;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -112,8 +107,12 @@ public class MainDeviceControlActivity extends BaseDeviceControlActivity {
     /*变量的声明*/
     //在本类应用的云端数据点
     ConcurrentHashMap<String, Object> MaindataMap;
+    private GizWifiDevice device;
 
-    //顶层框由父类继承
+    //顶层框
+    private QMUITopBar mTopBar;
+
+
     //进入七彩灯控制的按钮
     private Button mBtn_EnterColorControl;
 
@@ -267,7 +266,7 @@ public class MainDeviceControlActivity extends BaseDeviceControlActivity {
         mBtn_EnterColorControl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainDeviceControlActivity.this,RGBLightActivity.class));
+                startActivity(new Intent(MainDeviceControlActivity.this, RGBLightActivity.class));
             }
         });
 
@@ -356,10 +355,8 @@ public class MainDeviceControlActivity extends BaseDeviceControlActivity {
     @Override
     protected void receiveCloudData(ConcurrentHashMap<String, Object> dataMap) {
         super.receiveCloudData(dataMap);
-
         //分析收到的数据
         analyzeReceiData(dataMap);
-
     }
 
     /**

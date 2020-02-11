@@ -1,4 +1,4 @@
-package com.yuan_giziwits_andorid.DevicrControl;
+package com.yuan_giziwits_andorid.UI.DevicrControl;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
@@ -10,23 +10,20 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.PersistableBundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
+import com.gizwits.gizwifisdk.api.GizWifiSDK;
 import com.gizwits.gizwifisdk.enumration.GizWifiDeviceNetStatus;
 import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
 import com.gizwits.gizwifisdk.listener.GizWifiDeviceListener;
 import com.qmuiteam.qmui.widget.QMUITopBar;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.yuan_giziwits_andorid.Quit.MyApplication;
 import com.yuan_giziwits_andorid.Utils.Constant;
-import com.yuan_giziwits_andorid.Utils.WifiAdminUtils;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -38,7 +35,7 @@ public abstract class BaseDeviceControlActivity extends AppCompatActivity {
     //弹窗
     protected QMUITipDialog mQMUITipDialog;
     //顶层topBar
-    protected QMUITopBar mTopBar;
+    //protected QMUITopBar mTopBar;
     //网络状态广播
     private NetWorkChangedReceiver netWorkChangedReceiver;
 
@@ -61,23 +58,25 @@ public abstract class BaseDeviceControlActivity extends AppCompatActivity {
                     public void run() {
                         mQMUITipDialog.dismiss();
                     }
-                },1000);
-            }else if(msg.what==121){
-                mQMUITipDialog = new QMUITipDialog.Builder(BaseDeviceControlActivity.this)
-                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_FAIL)
-                        .setTipWord("设备下线，请检查手机网络或设备电源")
-                        .create();
-                mQMUITipDialog.show();
-                //1.5s后弹窗消失
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mQMUITipDialog.dismiss();
-                        //退出控制界面
-                        finish();
-                    }
-                },1500);
-            }
+                },500);
+          }
+             //当网络不好，容易引起误判，去掉
+//            else if(msg.what==121){
+//                mQMUITipDialog = new QMUITipDialog.Builder(BaseDeviceControlActivity.this)
+//                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_FAIL)
+//                        .setTipWord("设备下线，请检查手机网络或设备电源")
+//                        .create();
+//                mQMUITipDialog.show();
+//                //1.5s后弹窗消失
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mQMUITipDialog.dismiss();
+//                        //退出控制界面
+//                        finish();
+//                    }
+//                },1500);
+//            }
         }
     };
 
@@ -241,6 +240,9 @@ public abstract class BaseDeviceControlActivity extends AppCompatActivity {
 
         }
     }
+
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

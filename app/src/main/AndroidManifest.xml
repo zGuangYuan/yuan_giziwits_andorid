@@ -21,13 +21,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".LOCK.PaswSettingActivity"></activity>
+        <activity android:name=".UI.DevicrControl.ColorSeekBar.ColorSeekBarActivity"></activity>
+        <activity android:name=".LOCK.PaswSettingActivity" />
         <activity android:name=".LOCK.WelcomeLockActivity" />
-        <activity android:name=".DevicrControl.SecondDeviceCtrlActivity" />
-        <activity android:name=".UI.PatternLockViewActivity" />
-        <activity android:name=".DevicrControl.LockActivity" />
-        <activity android:name=".DevicrControl.RGBLightActivity" />
-        <activity android:name=".DevicrControl.MainDeviceControlActivity" />
+        <activity android:name=".UI.DevicrControl.SecondDeviceCtrlActivity" />
+        <activity android:name=".LOCK.PatternLockViewActivity" />
+        <activity android:name=".LOCK.LockActivity" />
+        <activity android:name=".UI.DevicrControl.SubMainActivity.RGBLightActivity" />
+        <activity android:name=".UI.DevicrControl.MainDeviceControlActivity" />
         <activity android:name=".UI.NetConfigActivity" />
         <activity
             android:name=".UI.SplashActivity"

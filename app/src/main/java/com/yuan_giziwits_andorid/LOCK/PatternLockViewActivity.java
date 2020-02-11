@@ -1,4 +1,4 @@
-package com.yuan_giziwits_andorid.UI;
+package com.yuan_giziwits_andorid.LOCK;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,8 +24,6 @@ import com.andrognito.rxpatternlockview.events.PatternLockCompoundEvent;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
-import com.yuan_giziwits_andorid.LOCK.PaswSettingActivity;
-import com.yuan_giziwits_andorid.LOCK.WelcomeLockActivity;
 import com.yuan_giziwits_andorid.Quit.MyApplication;
 import com.yuan_giziwits_andorid.R;
 import com.yuan_giziwits_andorid.Utils.SharePreferenceUtils;

@@ -1,16 +1,8 @@
-package com.yuan_giziwits_andorid.DevicrControl;
+package com.yuan_giziwits_andorid.LOCK;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,21 +12,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
-import com.yuan_giziwits_andorid.MainActivity;
 import com.yuan_giziwits_andorid.Quit.MyApplication;
 import com.yuan_giziwits_andorid.R;
-import com.yuan_giziwits_andorid.UI.NetConfigActivity;
-import com.yuan_giziwits_andorid.UI.SplashActivity;
 import com.yuan_giziwits_andorid.Utils.SharePreferenceUtils;
-
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class LockActivity extends AppCompatActivity {

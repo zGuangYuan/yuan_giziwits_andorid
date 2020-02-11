@@ -1,4 +1,4 @@
-package com.yuan_giziwits_andorid.DevicrControl;
+package com.yuan_giziwits_andorid.UI.DevicrControl.SubMainActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.yuan_giziwits_andorid.Quit.MyApplication;
 import com.yuan_giziwits_andorid.R;
+import com.yuan_giziwits_andorid.Utils.ToastUtil;
 
 
 import java.util.concurrent.ConcurrentHashMap;
