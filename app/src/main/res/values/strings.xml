@@ -1,6 +1,47 @@
 <resources>
     <string name="App_name"> "智慧家"</string>
 
+
+    <!-- 设备列表 -->
+
+
+    <!-- DeviceListActivity -->
+    <string name="devicelist_title">我的设备</string>
+    <string name="offline_devices">离线设备</string>
+    <string name="found_devices">发现新设备</string>
+    <string name="havenot_device">没有设备</string>
+    <string name="no_lan">远程</string>
+    <string name="lan">局域网</string>
+    <string name="unbind">未绑定</string>
+    <string name="found_many_devices">发现多台设备名，点击选择配置设备</string>
+    <string name="no_devices">暂无设备，请添加</string>
+    <string name="bound_divices">已绑定设备</string>
+    <string name="remove_bound">解除绑定</string>
+    <string name="unbound_failed">解绑失败</string>
+    <string name="bound_successful">绑定成功</string>
+    <string name="bound_failed">绑定失败</string>
+    <string name="setsubscribe_failed">订阅失败</string>
+    <string name="cancel_logout">确定要退出账号？</string>
+    <string name="no">不了</string>
+    <string name="doubleclick_logout">再次点击您将注销登录</string>
+    <string name="doubleclick_back">再次点击可返回</string>
+
+    <!-- SettingActivity -->
+    <string name="more">更多</string>
+    <string name="set_alias">修改设备名称</string>
+    <string name="alias_name">设备名称</string>
+    <string name="title_edit_alias">请输入设备名称</string>
+    <string name="text_save">保存</string>
+    <string name="dialog_btn_confirm">确定</string>
+    <string name="dialog_btn_cancle">取消</string>
+    <string name="reflashing_data">正在更新数据，请稍候…</string>
+    <string name="modify_succeed">设置成功</string>
+    <string name="modify_fail">设置失败</string>
+    <string name="unbound_succeed">解除绑定成功</string>
+    <string name="dialog_sure_to_delete">确定要解除设备绑定吗？</string>
+    <string name="unbounding_device">正在解除绑定</string>
+    <string name="device_not_bind">设备未被绑定</string>
+
     <!-- ControlActivity -->
     <string name="consumption">用电量：</string>
     <string name="degree">度</string>

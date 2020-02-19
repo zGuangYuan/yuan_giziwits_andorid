@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
 import com.gizwits.gizwifisdk.listener.GizWifiDeviceListener;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.yuan_giziwits_andorid.MainActivity;
 import com.yuan_giziwits_andorid.Quit.MyApplication;
 import com.yuan_giziwits_andorid.Utils.Constant;
 
@@ -47,18 +49,20 @@ public abstract class BaseDeviceControlActivity extends AppCompatActivity {
             if(msg.what==122){
                 //取消同步状态变为同步成功
                 mQMUITipDialog.dismiss();
-                mQMUITipDialog = new QMUITipDialog.Builder(BaseDeviceControlActivity.this)
-                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
-                        .setTipWord("同步成功")
-                        .create();
-                mQMUITipDialog.show();
-                //1.5s后弹窗消失
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mQMUITipDialog.dismiss();
-                    }
-                },500);
+
+                //同步成功之后直接把 正在同步的标志取消掉，不显示同步成功，定时的时候太干扰
+//                mQMUITipDialog = new QMUITipDialog.Builder(BaseDeviceControlActivity.this)
+//                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
+//                        .setTipWord("同步成功")
+//                        .create();
+//                mQMUITipDialog.show();
+//                //1.5s后弹窗消失
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mQMUITipDialog.dismiss();
+//                    }
+//                },500);
           }
              //当网络不好，容易引起误判，去掉
 //            else if(msg.what==121){
@@ -86,9 +90,9 @@ public abstract class BaseDeviceControlActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // 添加Activity到堆栈,退出用
-        MyApplication.getInstance().addActivity(this);
 
+
+        //初始化设备：把上一界面MainActivity中的对象（Device）拿到本Activity使用
         initDevice();
         //注册广播
         initNetBrocastReceiver();
@@ -113,7 +117,6 @@ public abstract class BaseDeviceControlActivity extends AppCompatActivity {
         mDevice = this.getIntent().getParcelableExtra("yuan_device01");
         //设置设备云端回调的监听,这一步很重要
         mDevice.setListener(mGizwitDeviceListener);
-
 
         //已进入控制界面就是弹窗，正在刷新
         mQMUITipDialog = new QMUITipDialog.Builder(BaseDeviceControlActivity.this)
@@ -150,6 +153,20 @@ public abstract class BaseDeviceControlActivity extends AppCompatActivity {
         //Toast.makeText(BaseDeviceControlActivity.this, "订阅对象获取成功" , Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * description：当前设备是否可控
+     */
+    public void getStatusOfDevice(){
+        //可控
+        if(isDeviceCanBeControlled()){
+            //可控则消失弹窗
+            mQMUITipDialog.dismiss();
+        }
+    }
+    private boolean isDeviceCanBeControlled() {
+        return mDevice.getNetStatus() == GizWifiDeviceNetStatus.GizDeviceControlled;
+    }
+
 
     /**
      *
@@ -163,15 +180,20 @@ public abstract class BaseDeviceControlActivity extends AppCompatActivity {
      */
     private GizWifiDeviceListener mGizwitDeviceListener = new GizWifiDeviceListener(){
 
+
         @Override
         public void didReceiveData(GizWifiErrorCode result, GizWifiDevice device, ConcurrentHashMap<String, Object> dataMap, int sn) {
             super.didReceiveData(result, device, dataMap, sn);
             /*详细见 GizWifiErrorCode 枚举定义。GIZ_SDK_SUCCESS 表示成功，
                 其他为失败。失败时，dataMap 为空字典*/
+
             if(result == GizWifiErrorCode.GIZ_SDK_SUCCESS){
+
                 //如果成功说明打dataMap不为空，那么就可以接受云端发送的信息了
                 if(!dataMap.isEmpty()){
+                    //每次和云端同步都会 显示同步成功，因为有定时器的下发，暂不设置
                     mHandler.sendEmptyMessage(122);
+                    //设备在线可控，则获取云端数据到 dataMap
                     receiveCloudData(dataMap);
                     Log.e("yuan12312","接受云端的数据:"+dataMap);
                 }
@@ -237,12 +259,8 @@ public abstract class BaseDeviceControlActivity extends AppCompatActivity {
             if(info == null){
                 return;
             }
-
         }
     }
-
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -258,6 +276,17 @@ public abstract class BaseDeviceControlActivity extends AppCompatActivity {
             case Constant.SECOND_PK:
                 mDevice.setSubscribe(Constant.SECOND_PS, false);
                 break;
+            case Constant.THIRD_PK:
+                mDevice.setSubscribe(Constant.THIRD_PS, false);
+                break;
+            case Constant.FORTH_PK:
+                mDevice.setSubscribe(Constant.FORTH_PS, false);
+                break;
+            case Constant.FIFTH_PK:
+                mDevice.setSubscribe(Constant.FIFTH_PS, false);
+                break;
         }
+        //显示取消订阅的信息，用于调试
+        //Toast.makeText(BaseDeviceControlActivity.this, mDevice.getProductName() +"取消订阅" , Toast.LENGTH_SHORT).show();
     }
 }

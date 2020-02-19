@@ -24,74 +24,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <Button
-                    android:id="@+id/Reset_ButtonId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="300dp"
-                    android:background="@drawable/btn_beselected"
-                    android:text="复位" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:background="@drawable/btn_background"
-                    android:gravity="center"
-                    android:text="七彩灯控制面板"
-                    android:textColor="#f86354"
-                    android:textSize="30dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="42dp"
-                        android:layout_weight="0.10"
-                        android:background="@drawable/btn_beselected"
-                        android:text="七彩灯总控"
-                        android:textColor="@color/white"
-                        android:textSize="30sp" />
-
-                    <CheckBox
-                        android:id="@+id/checkBox"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="43dp"
-                        android:background="@drawable/color_control_selecter_cb"
-                        android:button="@null" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/RGB_Light_ButtonId"
-                        android:layout_width="157dp"
-                        android:layout_height="41dp"
-                        android:background="@drawable/btn_beselected"
-                        android:text="颜色控制"
-                        android:textColor="@color/white"
-                        android:textSize="30dp" />
-
-                    <CheckBox
-                        android:id="@+id/color_control_enter_ID"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:layout_marginLeft="20dp"
-                        android:background="@mipmap/color_cycle"
-                        android:button="@null" />
-
-
-                </LinearLayout>
-
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
@@ -102,140 +34,82 @@
                     android:textSize="30dp" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-
-                    <TextView
-                        android:id="@+id/TV_RedID"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="大厅灯开关：关"
-                        android:textAllCaps="false"
-                        android:textColor="#33ff99"
-                        android:textSize="20dp" />
-
-                    <CheckBox
-                        android:id="@+id/checkbox01_ID"
-                        android:layout_width="150dp"
-                        android:layout_height="85dp"
-                        android:background="@drawable/selecter02_cb"
-                        android:button="@null" />
-
-                    <TextView
-                        android:id="@+id/TV_GreenID"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:layout_marginTop="5dp"
-                        android:text="食厅灯开关：关"
-                        android:textAllCaps="false"
-                        android:textColor="#33ff99"
-                        android:textSize="20dp" />
-
-                    <CheckBox
-                        android:id="@+id/checkbox02_ID"
-                        android:layout_width="150dp"
-                        android:layout_height="85dp"
-                        android:background="@drawable/selecter02_cb"
-                        android:button="@null" />
-
-                    <TextView
-                        android:id="@+id/TV_BlueID"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:text="卧室灯开关：关"
-                        android:textAllCaps="false"
-                        android:textColor="#33ff99"
-                        android:textSize="20dp" />
-
-                    <CheckBox
-                        android:id="@+id/checkbox03_ID"
-                        android:layout_width="150dp"
-                        android:layout_height="85dp"
-                        android:background="@drawable/selecter02_cb"
-                        android:button="@null" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:background="@drawable/btn_background"
-                    android:gravity="center"
-                    android:text="门禁开关面板"
-                    android:textColor="#f86354"
-                    android:textSize="30dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="0.24"
-                    android:orientation="horizontal">
-
-                    <ImageButton
-                        android:id="@+id/IV_ButtonID"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="40dp"
-                        android:background="@mipmap/ic_door_open2" />
-
-                    <ImageButton
-                        android:id="@+id/IV_closeButtonID"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="80dp"
-                        android:background="@mipmap/ic_door_close3" />
-
-                </LinearLayout>
-
-                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="30dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
 
-                    <TextView
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="门禁状态指示："
-                        android:textColor="#33ff99"
-                        android:textSize="20dp" />
+                        android:orientation="vertical"
+                        android:layout_marginLeft="10dp">
+                        <TextView
+                            android:id="@+id/TV_RedID"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="大厅：关"
+                            android:textAllCaps="false"
+                            android:textColor="#33ff99"
+                            android:textSize="20dp" />
 
-
-                    <TextView
-                        android:id="@+id/TV_indicateID"
+                        <CheckBox
+                            android:id="@+id/checkbox01_ID"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:background="@drawable/color_control_selecter_cb"
+                            android:button="@null" />
+                    </LinearLayout>
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="关闭"
-                        android:textColor="#ffff00"
-                        android:textSize="20dp" />
+                        android:orientation="vertical"
+                        android:layout_marginLeft="20dp">
+                        <TextView
+                            android:id="@+id/TV_GreenID"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="食厅：关"
+                            android:textAllCaps="false"
+                            android:textColor="#33ff99"
+                            android:textSize="20dp" />
+
+                        <CheckBox
+                            android:id="@+id/checkbox02_ID"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:background="@drawable/color_control_selecter_cb"
+                            android:button="@null" />
+
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="20dp">
+                        <TextView
+                            android:id="@+id/TV_BlueID"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="卧室：关"
+                            android:textAllCaps="false"
+                            android:textColor="#33ff99"
+                            android:textSize="20dp" />
+                        <CheckBox
+                            android:id="@+id/checkbox03_ID"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:background="@drawable/color_control_selecter_cb"
+                            android:button="@null" />
+                    </LinearLayout>
+
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="100dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:textSize="20dp"
-                        android:text="门禁设置" />
-                    <ImageButton
-                        android:id="@+id/IV_DoorSettingButtonID"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="20dp"
-                        android:background="@mipmap/ic_door_setting" />
 
 
 
-                </LinearLayout>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="35dp"

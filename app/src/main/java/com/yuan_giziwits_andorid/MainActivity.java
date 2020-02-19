@@ -36,9 +36,11 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.yuan_giziwits_andorid.Adapter.LVDevicesAdapter;
 import com.yuan_giziwits_andorid.UI.DevicrControl.ColorSeekBar.ColorSeekBarActivity;
+import com.yuan_giziwits_andorid.UI.DevicrControl.GateControl.GateControlActivity;
 import com.yuan_giziwits_andorid.UI.DevicrControl.MainDeviceControlActivity;
 import com.yuan_giziwits_andorid.LOCK.PaswSettingActivity;
 import com.yuan_giziwits_andorid.Quit.MyApplication;
+import com.yuan_giziwits_andorid.UI.DevicrControl.TimingSocket.TimingSocketActivity;
 import com.yuan_giziwits_andorid.UI.NetConfigActivity;
 import com.yuan_giziwits_andorid.Utils.Constant;
 import com.yuan_giziwits_andorid.Utils.L;
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
     //uid和token的全局变量
     private String uid;
     private String token;
+    //上下文
+    private Context mContext;
 
     //设备集合,在一个app中的项目集合
     private List<GizWifiDevice> GiziwitsdeviceList;
@@ -76,11 +80,6 @@ public class MainActivity extends AppCompatActivity {
 
     //顶层栏
     private QMUITopBar mQMUItopBar;
-
-    //更新ui的状态码
-    private final int updataUICode = 109;
-
-    private static final int REQUEST_QR_CODE = 115;
 
     //Handler主要用于UI操作
     @SuppressLint("HandlerLeak")
@@ -118,6 +117,8 @@ public class MainActivity extends AppCompatActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
         setContentView(R.layout.activity_main);
+        //上下文
+        mContext = this;
         //初始化SDK
         initSDK();
         //初始化UI
@@ -175,8 +176,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
         //设置下拉的颜色
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.app_color_theme_1,
@@ -206,10 +205,6 @@ public class MainActivity extends AppCompatActivity {
 
         //根据登录成功后的uid和token去得到绑定设备列表
         getLocalDevice();
-
-
-
-
 
 
         /*点击ListView的回调事件*/
@@ -333,11 +328,18 @@ public class MainActivity extends AppCompatActivity {
                 case Constant.SECOND_PK:
                     device.setSubscribe(Constant.SECOND_PS, true);
                     break;
+                case Constant.THIRD_PK:
+                    device.setSubscribe(Constant.THIRD_PS, true);
+                    break;
+                case Constant.FORTH_PK:
+                    device.setSubscribe(Constant.FORTH_PS, true);
+                    break;
+                case Constant.FIFTH_PK:
+                    device.setSubscribe(Constant.FIFTH_PS, true);
+                    break;
             }
         }
     }
-
-
     /**
      * 功能：长按Listview的回调函数,目的：弹窗，修改别名
      * @param device   需要修改别名的设备
@@ -463,17 +465,35 @@ public class MainActivity extends AppCompatActivity {
 
         //每个产品对应一个ConcurrentHashMap<String, String>对象
 
-        //第一个app的信息
+        //第1个app的信息
         ConcurrentHashMap<String, String> product1 = new ConcurrentHashMap<>();
         product1.put("productKey", Constant.FIRST_PK);
         product1.put("productSecret", Constant.FIRST_PS);
         productInfo.add(product1);
 
-        //第二个app的信息
+        //第2个app的信息
         ConcurrentHashMap<String, String> product2 = new ConcurrentHashMap<>();
         product2.put("productKey", Constant.SECOND_PK);
         product2.put("productSecret", Constant.SECOND_PS);
         productInfo.add(product2);
+
+        //第3个app的信息
+        ConcurrentHashMap<String, String> product3 = new ConcurrentHashMap<>();
+        product3.put("productKey", Constant.THIRD_PK);
+        product3.put("productSecret", Constant.THIRD_PS);
+        productInfo.add(product3);
+
+        //第4个app的信息
+        ConcurrentHashMap<String, String> product4 = new ConcurrentHashMap<>();
+        product4.put("productKey", Constant.FORTH_PK);
+        product4.put("productSecret", Constant.FORTH_PS);
+        productInfo.add(product4);
+
+        //第5个app的信息
+        ConcurrentHashMap<String, String> product5 = new ConcurrentHashMap<>();
+        product5.put("productKey", Constant.FIFTH_PK);
+        product5.put("productSecret", Constant.FIFTH_PS);
+        productInfo.add(product5);
 
         // 调用 SDK 的启动接口
         GizWifiSDK.sharedInstance().startWithAppInfo(this, appInfo, productInfo, null, false);
@@ -540,7 +560,6 @@ public class MainActivity extends AppCompatActivity {
                 GiziwitsdeviceList.addAll(deviceList);
                 //逐个绑定设备
                 for(int i=0; i < GiziwitsdeviceList.size();i++){
-
                     //如果设备没有绑定
                     if(!deviceList.get(i).isBind()){
                         L.e("第" + i +"个未绑定，开始绑定");
@@ -575,7 +594,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this,"绑定失败咯！",Toast.LENGTH_SHORT).show();
             }
         }
-
         /**
          * 功能：解绑设备的回调方法
          * @param result
@@ -607,19 +625,17 @@ public class MainActivity extends AppCompatActivity {
 
         if(uid!=null && token !=null){
 
-
-
             //根据 pk 去判断需要填的ps
             if(device.getProductKey().equals(Constant.FIRST_PK)){
                 L.e("                                                                " );
-                L.e("<----------------------七彩智能灯------------------------------->" );
+                L.e("<----------------------毕设01_七彩灯------------------------------->" );
                 L.e("|绑定的设备的  MacAddress:" + device.getMacAddress());
                 L.e("|uid:" + uid);
                 L.e("|token:" + token);
                 L.e("|getMacAddress:" + device.getMacAddress());
                 L.e("|getProductKey:" + device.getProductKey());
                 L.e("|getProductScret:" + Constant.FIRST_PS);
-                L.e("<------------------------七彩智能灯----------------------------->" );
+                L.e("<------------------------毕设01_七彩灯----------------------------->" );
                 L.e("                                                                " );
                 GizWifiSDK.sharedInstance().bindRemoteDevice(uid,token, device.getMacAddress(),device.getProductKey(),Constant.FIRST_PS);
 
@@ -627,16 +643,61 @@ public class MainActivity extends AppCompatActivity {
             else if(device.getProductKey().equals(Constant.SECOND_PK))
             {
                 L.e("                                                                " );
-                L.e("<----------------------综合项目------------------------------->" );
+                L.e("<----------------------毕设02_门控------------------------------->" );
                 L.e("|绑定的设备的  MacAddress:" + device.getMacAddress());
                 L.e("|uid:" + uid);
                 L.e("|token:" + token);
                 L.e("|getMacAddress:" + device.getMacAddress());
                 L.e("|getProductKey:" + device.getProductKey());
                 L.e("|getProductScret:" + Constant.SECOND_PS);
-                L.e("<------------------------综合项目----------------------------->" );
+                L.e("<------------------------毕设02_门控----------------------------->" );
                 L.e("                                                                " );
                 GizWifiSDK.sharedInstance().bindRemoteDevice(uid,token, device.getMacAddress(),device.getProductKey(),Constant.SECOND_PS);
+
+            }
+            else if(device.getProductKey().equals(Constant.THIRD_PK))
+            {
+                L.e("                                                                " );
+                L.e("<----------------------毕设03_灯及状态------------------------------->" );
+                L.e("|绑定的设备的  MacAddress:" + device.getMacAddress());
+                L.e("|uid:" + uid);
+                L.e("|token:" + token);
+                L.e("|getMacAddress:" + device.getMacAddress());
+                L.e("|getProductKey:" + device.getProductKey());
+                L.e("|getProductScret:" + Constant.THIRD_PS);
+                L.e("<------------------------毕设03_灯及状态----------------------------->" );
+                L.e("                                                                " );
+                GizWifiSDK.sharedInstance().bindRemoteDevice(uid,token, device.getMacAddress(),device.getProductKey(),Constant.THIRD_PS);
+
+            }
+            else if(device.getProductKey().equals(Constant.FORTH_PK))
+            {
+                L.e("                                                                " );
+                L.e("<----------------------未设置------------------------------->" );
+                L.e("|绑定的设备的  MacAddress:" + device.getMacAddress());
+                L.e("|uid:" + uid);
+                L.e("|token:" + token);
+                L.e("|getMacAddress:" + device.getMacAddress());
+                L.e("|getProductKey:" + device.getProductKey());
+                L.e("|getProductScret:" + Constant.FORTH_PS);
+                L.e("<------------------------未设置----------------------------->" );
+                L.e("                                                                " );
+                GizWifiSDK.sharedInstance().bindRemoteDevice(uid,token, device.getMacAddress(),device.getProductKey(),Constant.FORTH_PS);
+
+            }
+            else if(device.getProductKey().equals(Constant.FIFTH_PK))
+            {
+                L.e("                                                                " );
+                L.e("<----------------------未设置------------------------------->" );
+                L.e("|绑定的设备的  MacAddress:" + device.getMacAddress());
+                L.e("|uid:" + uid);
+                L.e("|token:" + token);
+                L.e("|getMacAddress:" + device.getMacAddress());
+                L.e("|getProductKey:" + device.getProductKey());
+                L.e("|getProductScret:" + Constant.FIFTH_PS);
+                L.e("<------------------------未设置----------------------------->" );
+                L.e("                                                                " );
+                GizWifiSDK.sharedInstance().bindRemoteDevice(uid,token, device.getMacAddress(),device.getProductKey(),Constant.FIFTH_PS);
 
             }
         }
@@ -681,24 +742,42 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent =new Intent();
                 intent.putExtra("yuan_device01",device);
                 switch (device.getProductKey()) {
-                    //微信宠物屋
+                    //毕设01_七彩灯
                     case Constant.FIRST_PK:
-                        intent.setClass(MainActivity.this, MainDeviceControlActivity.class);
-                        startActivity(intent);
-                        break;
-                    //定时开关灯
-                    case Constant.SECOND_PK:
-                        //智能灯控制实验
                         intent.setClass(MainActivity.this, ColorSeekBarActivity.class);
                         startActivity(intent);
                         break;
+                    //毕设02_门控
+                    case Constant.SECOND_PK:
+                        //智能灯控制实验
+                        intent.setClass(MainActivity.this, GateControlActivity.class);
+                        startActivity(intent);
+                        break;
+                    //毕设03_灯及状态
+                    case Constant.THIRD_PK:
+                        intent.setClass(MainActivity.this, MainDeviceControlActivity.class);
+                        startActivity(intent);
+                        break;
+                    //毕设04_定时插座
+                    case Constant.FORTH_PK:
+                        //智能灯控制实验
+                        intent.setClass(MainActivity.this, TimingSocketActivity.class);
+                        startActivity(intent);
+                        break;
+                    //微信宠物屋
+                    case Constant.FIFTH_PK:
+                        //intent.setClass(MainActivity.this, MainDeviceControlActivity.class);
+                        //startActivity(intent);
+                        break;
+                    default:
+                        break;
+
                 }
 
 
             }
         }
     };
-
     /**
      * 返回按键的监听
      */

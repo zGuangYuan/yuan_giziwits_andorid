@@ -13,7 +13,7 @@
             android:id="@+id/rl_header"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:background="@drawable/comd_top"
+            android:background="@color/app_color_blue"
             android:layout_alignParentTop="true">
 
         </RelativeLayout>
@@ -24,7 +24,7 @@
             android:id="@+id/rl_bottom"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:background="#efefef"
+            android:background="@color/app_color_blue"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_alignParentBottom="true">
@@ -122,36 +122,37 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true">
 
-                    <com.yuan_giziwits_andorid.ColorCircularSeekBar.ColorCircularSeekBar
+                    <com.yuan_giziwits_andorid.ColorSeekBar.ColorCircularSeekBar
                         android:id="@+id/csbSeekbar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_margin="5dp"/>
 
-                    <com.yuan_giziwits_andorid.ColorCircularSeekBar.ColorCircularSeekBar
+                    <com.yuan_giziwits_andorid.ColorSeekBar.ColorCircularSeekBar
                         android:id="@+id/csbSeekbar2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_margin="5dp"/>
+                        android:layout_height="wrap_content" />
 
                     <Button
-                        android:id="@+id/btnmode"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:id="@+id/setWarmLight_ID"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentRight="true"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginRight="20dp"
-                        android:background="@drawable/selector_mode"/>
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="-10dp"
+                        android:background="@drawable/worm_color" />
 
                     <Button
-                        android:layout_width="30dp"
-                        android:layout_height="20dp"
-                        android:layout_marginTop="55dp"
-                        android:layout_toLeftOf="@id/btnmode"
-                        android:background="@drawable/comd1_home_icon_tab"/>
+                        android:id="@+id/setWhiteLight_ID"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="-1dp"
+                        android:layout_toLeftOf="@id/setWarmLight_ID"
+                        android:background="@drawable/white_color" />
+
                     <TextView
                         android:id="@+id/color_num_ID"
                         android:textSize="20dp"
@@ -165,30 +166,37 @@
                     android:id="@+id/rlDelay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="100dp"
                     android:layout_alignBottom="@id/rl_seekbar">
-                    <TextView
-                        android:id="@+id/test_txt"
+                    <CheckBox
+                        android:id="@+id/delay_OnOff_ID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_alignParentBottom="true"/>
+                        android:background="@drawable/selecter_delay_onoff"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="120dp"
+                        android:enabled="false"
+                        android:button="@null" />
                     <TextView
                         android:id="@+id/delaytxt"
+                        android:textSize="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@id/test_txt"
+                        android:layout_toRightOf="@id/delay_OnOff_ID"
                         android:layout_alignParentBottom="true"
-                        android:text="@string/delay_turn_off"/>
+                        android:layout_alignTop="@id/delay_OnOff_ID"
+                        android:text=" 未启用定时"/>
                     <TextView
                         android:id="@+id/tvDelay"
+                        android:textSize="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_toRightOf="@id/test_txt"/>
+                        android:layout_alignTop="@id/delaytxt"
+                        android:layout_toRightOf="@id/delaytxt"
+                        android:text="  "/>
                 </RelativeLayout>
             </RelativeLayout>
             <!-- 环形布局结束 -->
+
 
         </RelativeLayout>
         <!-- 中部布局结束 -->
@@ -200,6 +208,7 @@
             android:layout_alignTop="@id/rl_middle"
             android:layout_alignLeft="@id/rl_middle"
             android:layout_alignRight="@id/rl_middle"
+            android:background="@color/gray"
             android:visibility="invisible"/>
     </RelativeLayout>
     <!-- 底层UI布局结束 -->
@@ -233,23 +242,23 @@
             android:layout_alignParentTop="true">
             <ImageView
                 android:id="@+id/iv_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="20dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
-                android:src="@drawable/comd1_icon_return"/>
+                android:src="@drawable/iv_back"/>
             <ImageView
                 android:id="@+id/ivSetting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/app_name"
                 android:paddingRight="15dp"
-                android:src="@drawable/comd1_btn_menu"/>
+                android:src="@drawable/iv_meau"/>
             <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
@@ -262,7 +271,7 @@
                 android:layout_marginRight="32dp"
                 android:layout_alignLeft="@id/iv_back"
                 android:layout_alignRight="@id/ivSetting"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="22sp"/>
         </RelativeLayout>
         <!-- 头部布局结束 -->
@@ -271,10 +280,9 @@
         <RelativeLayout
             android:id="@+id/rlPowerOn"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_alignParentBottom="true">
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
 
             <!-- 开关布局开始 -->
             <RelativeLayout
@@ -290,8 +298,8 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:background="@drawable/selector_power"/>
+                    android:background="@drawable/selector_power"
+                    android:gravity="center" />
 
                 <TextView
                     android:id="@+id/tvPower"
@@ -299,7 +307,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginTop="30dp"/>
+                    android:layout_marginTop="30dp" />
 
             </RelativeLayout>
             <!-- 开关布局结束 -->

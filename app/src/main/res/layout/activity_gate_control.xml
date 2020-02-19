@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/GateCtrlSwipeRefreshLayout_ID"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/GateChangeBG_ID"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_door"
+        android:orientation="vertical"
+        android:clickable="true">
+        <com.qmuiteam.qmui.widget.QMUITopBar
+            android:id="@+id/GateControl_topBar_ID"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/qmui_topbar_height"
+            app:qmui_topbar_title_color="@color/tab_panel_bg" />
+        <ImageView
+            android:id="@+id/iv_CountDown_ID"
+            android:layout_marginTop="100dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp" />
+        <ImageView
+            android:id="@+id/iv_BanEnter_ID"
+            android:layout_marginTop="2dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/iv_ban_enter"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/IV_ButtonID"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="30dp"
+                android:background="@mipmap/ic_door_open2" />
+
+            <ImageButton
+                android:id="@+id/IV_closeButtonID"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="120dp"
+                android:background="@mipmap/ic_door_close3" />
+
+        </LinearLayout>
+
+        
+    </LinearLayout>
+
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

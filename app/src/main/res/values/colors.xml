@@ -76,4 +76,17 @@
     <color name="text_color">#333333</color>
     <color name="green">#7CFC00</color>
     <color name="red">#FF0000</color>
+
+
+
+
+    <!-- ControlActivity Color:机智云 -->
+    <color name="transparent">#00000000</color>
+    <color name="background_blue">#297dee</color>
+    <color name="text_orange">#ff6100</color>
+    <color name="text_black">#333333</color>
+    <color name="text_yellow">#e4e40c</color>
+    <color name="divider_gray">#a5b1b6</color>
+    <color name="dialog_background">#efefef</color>
+    <color name="btn_remove_device_color">#51a0fc</color>
 </resources>

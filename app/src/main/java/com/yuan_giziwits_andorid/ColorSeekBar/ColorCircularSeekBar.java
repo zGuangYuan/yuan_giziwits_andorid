@@ -1,4 +1,4 @@
-package com.yuan_giziwits_andorid.ColorCircularSeekBar;
+package com.yuan_giziwits_andorid.ColorSeekBar;
 
 import android.content.Context;
 import android.graphics.Bitmap;

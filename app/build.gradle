@@ -44,6 +44,8 @@ dependencies {
     implementation 'com.andrognito.patternlockview:patternlockview:1.0.0'
     // Optional, for RxJava2 adapter
     implementation 'com.andrognito.patternlockview:patternlockview-reactive:1.0.0'
+    //时间选择器的开源库
+    implementation 'com.wdullaer:materialdatetimepicker:3.5.1'
 
 
 }

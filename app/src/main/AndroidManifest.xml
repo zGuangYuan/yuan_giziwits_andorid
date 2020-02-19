@@ -21,7 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".UI.DevicrControl.ColorSeekBar.ColorSeekBarActivity"></activity>
+        <activity android:name=".UI.DevicrControl.TimingSocket.TimingSocketActivity" />
+        <activity android:name=".UI.DevicrControl.GateControl.GateControlActivity" />
+        <activity android:name=".UI.DevicrControl.ColorSeekBar.ColorSeekBarActivity" />
         <activity android:name=".LOCK.PaswSettingActivity" />
         <activity android:name=".LOCK.WelcomeLockActivity" />
         <activity android:name=".UI.DevicrControl.SecondDeviceCtrlActivity" />

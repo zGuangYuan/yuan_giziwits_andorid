@@ -41,5 +41,15 @@
         <item name="qmui_topbar_image_btn_height">48dp</item>
     </style>
 
+    <!-- controlmodule -->
+    <style name="ButtonStyle2">
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:background">@drawable/comd_btn_remove_device</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
 
 </resources>

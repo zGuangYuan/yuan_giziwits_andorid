@@ -1,13 +1,17 @@
 package com.yuan_giziwits_andorid.LOCK;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -24,8 +28,10 @@ import com.andrognito.rxpatternlockview.events.PatternLockCompoundEvent;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.yuan_giziwits_andorid.MainActivity;
 import com.yuan_giziwits_andorid.Quit.MyApplication;
 import com.yuan_giziwits_andorid.R;
+import com.yuan_giziwits_andorid.UI.DevicrControl.GateControl.GateControlActivity;
 import com.yuan_giziwits_andorid.Utils.SharePreferenceUtils;
 
 import java.util.List;
@@ -198,11 +204,25 @@ public class PatternLockViewActivity extends AppCompatActivity {
                     //判断为正确
                     mPatternLockView.setViewMode(PatternLockView.PatternViewMode.CORRECT);
                     Toast.makeText(PatternLockViewActivity.this,"您绘制的密码是："+patternToString+"\n"+"密码正确，开锁成功",Toast.LENGTH_SHORT).show();
+                    //页面跳转并返回结果
+                    //新建一个Intent对象
+                    Intent intent = new Intent();
+                    //生成一个Bundle对象
+                    Bundle bundle1 =new Bundle();
+                    //放置数据
+                    bundle1.putString("result","ok");
+
+                    intent.putExtras(bundle1);
+                    //返回Intent对象
+                    setResult(Activity.RESULT_OK,intent);
+                    //关闭当前的Activity
+                    finish();
 
                 }else {
 
                     mPatternLockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
                     Toast.makeText(PatternLockViewActivity.this,"您绘制的密码是："+patternToString+"\n"+"密码错误，请重新绘制", Toast.LENGTH_SHORT).show();
+
                 }
             }
             //3s后清除图案
@@ -218,4 +238,43 @@ public class PatternLockViewActivity extends AppCompatActivity {
             Log.d(getClass().getName(), "Pattern has been cleared");
         }
     };
+    /**
+     * 返回按键的监听
+     */
+    private boolean mIsExit;
+    /**双击返回键退出*/
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mIsExit) {
+                //新建一个Intent对象
+                Intent intent = new Intent();
+                //生成一个Bundle对象
+                Bundle bundle1 =new Bundle();
+                //放置数据
+                bundle1.putString("result","fail");
+
+                intent.putExtras(bundle1);
+                //返回Intent对象
+                setResult(Activity.RESULT_OK,intent);
+                //关闭当前的Activity
+                finish();
+               // MyApplication.getInstance().exit();
+            } else {
+                Toast.makeText(PatternLockViewActivity.this, "再按一次退出此界面", Toast.LENGTH_SHORT).show();
+                mIsExit = true;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mIsExit = false;
+                    }
+                }, 2000);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+
 }

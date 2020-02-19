@@ -1,0 +1,212 @@
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/SocketSwipeRefreshLayout_ID"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/socket_bg"
+        android:scrollbars="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <com.qmuiteam.qmui.widget.QMUITopBar
+                android:id="@+id/SocketControl_topBar_ID"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/qmui_topbar_height"
+                app:qmui_topbar_title_color="@color/tab_panel_bg" />
+
+            <RelativeLayout
+                android:id="@+id/firstSocket_ID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp">
+                <ImageView
+                    android:id="@+id/iv_socket_ID"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+
+                    android:src="@drawable/socket2" />
+                <CheckBox
+                    android:id="@+id/cb_SocketPowerSwitch1_ID"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignRight="@id/iv_socket_ID"
+                    android:layout_alignBottom="@id/iv_socket_ID"
+
+                    android:layout_marginRight="55dp"
+                    android:layout_marginBottom="29dp"
+                    android:background="@drawable/socket_onoff_selecter"
+                    android:button="@null" />
+
+                <Button
+                    android:id="@+id/btn_timerSwitch1_ID"
+                    android:background="@drawable/timing"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignTop="@id/iv_socket_ID"
+                    android:layout_alignRight="@id/iv_socket_ID" />
+                <CheckBox
+                    android:id="@+id/cb_Timerstates1_ID"
+                    android:layout_width="36dp"
+                    android:layout_height="30dp"
+                    android:layout_alignRight="@id/iv_socket_ID"
+                    android:layout_alignBottom="@id/iv_socket_ID"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/showtimerstates"
+                    android:button="@null"
+                    android:visibility="invisible"/>
+                <TextView
+                    android:id="@+id/show_TimerStates_ID"
+                    android:layout_width="80dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="150dp"
+                    android:text=" "
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/green"
+                    android:layout_toRightOf="@id/iv_socket_ID" />
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/secondSocket_ID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="100dp">
+                <ImageView
+                    android:id="@+id/iv_socket2_ID"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+
+                    android:src="@drawable/socket2" />
+                <CheckBox
+
+                    android:id="@+id/cb_SocketPowerSwitch2_ID"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignRight="@id/iv_socket2_ID"
+                    android:layout_alignBottom="@id/iv_socket2_ID"
+
+                    android:layout_marginRight="55dp"
+                    android:layout_marginBottom="29dp"
+                    android:background="@drawable/socket_onoff_selecter"
+                    android:button="@null" />
+
+                <Button
+                    android:id="@+id/btn_timerSwitch2_ID"
+                    android:background="@drawable/timing"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignTop="@id/iv_socket2_ID"
+                    android:layout_alignRight="@id/iv_socket2_ID" />
+                <CheckBox
+                    android:id="@+id/cb_Timerstates2_ID"
+                    android:layout_width="36dp"
+                    android:layout_height="30dp"
+                    android:layout_alignRight="@id/iv_socket2_ID"
+                    android:layout_alignBottom="@id/iv_socket2_ID"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/showtimerstates"
+                    android:button="@null"
+                    android:visibility="invisible"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/thirdSocket_ID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/firstSocket_ID"
+                android:layout_marginTop="200dp">
+                <ImageView
+                    android:id="@+id/iv_socket3_ID"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+
+                    android:src="@drawable/socket2" />
+                <CheckBox
+                    android:id="@+id/cb_SocketPowerSwitch3_ID"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignRight="@id/iv_socket3_ID"
+                    android:layout_alignBottom="@id/iv_socket3_ID"
+
+                    android:layout_marginRight="55dp"
+                    android:layout_marginBottom="29dp"
+                    android:background="@drawable/socket_onoff_selecter"
+                    android:button="@null" />
+
+                <Button
+                    android:id="@+id/btn_timerSwitch3_ID"
+                    android:background="@drawable/timing"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignTop="@id/iv_socket3_ID"
+                    android:layout_alignRight="@id/iv_socket3_ID"/>
+                <CheckBox
+                    android:id="@+id/cb_Timerstates3_ID"
+                    android:layout_width="36dp"
+                    android:layout_height="30dp"
+                    android:layout_alignRight="@id/iv_socket3_ID"
+                    android:layout_alignBottom="@id/iv_socket3_ID"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/showtimerstates"
+                    android:button="@null"
+                    android:visibility="invisible"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/fourSocket_ID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/thirdSocket_ID"
+                android:layout_alignParentRight="true">
+                <ImageView
+                    android:id="@+id/iv_socket4_ID"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+
+                    android:src="@drawable/socket2" />
+                <CheckBox
+                    android:id="@+id/cb_SocketPowerSwitch4_ID"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignRight="@id/iv_socket4_ID"
+                    android:layout_alignBottom="@id/iv_socket4_ID"
+
+                    android:layout_marginRight="55dp"
+                    android:layout_marginBottom="29dp"
+                    android:background="@drawable/socket_onoff_selecter"
+                    android:button="@null" />
+
+                <Button
+                    android:id="@+id/btn_timerSwitch4_ID"
+                    android:background="@drawable/timing"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignTop="@id/iv_socket4_ID"
+                    android:layout_alignRight="@id/iv_socket4_ID" />
+                <CheckBox
+                    android:id="@+id/cb_Timerstates4_ID"
+                    android:layout_width="36dp"
+                    android:layout_height="30dp"
+                    android:layout_alignRight="@id/iv_socket4_ID"
+                    android:layout_alignBottom="@id/iv_socket4_ID"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/showtimerstates"
+                    android:button="@null"
+                    android:visibility="invisible"/>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -2,40 +2,44 @@ package com.yuan_giziwits_andorid.Utils;
 
 public class Constant {
 
-    //app的Id，
-    public static final String APP_ID = "13d4933f6748458782bbd3e83b19b99e";
+    /*********************************
+     * 主控app的信息，下面的产品只能绑定在这个app之上
+     ******************************/
+    //毕设01_七彩灯：app的Id，
+    public static final String APP_ID = "04ef8e497e534197b7e2261fcdb0f9f1";
 
-    //app的 sercret，
-    public static final String APP_SECRET = "7c3a23b8ce2943bbb2a82ae7cf86f93c";
-
-
-
-
+    //毕设01_七彩灯：app的 secret，
+    public static final String APP_SECRET = "c2f536da740a462fa1ac8944ae97c497";
 
     /*********************************
      * 以下为各种产品信息
-     **********************************************/
+     ******************************/
 
-    //七彩智能灯产品Key
-    public static final String FIRST_PK = "35786ce0d056450b8dff3da6e2b08c71";
-    //七彩智能产品密钥
-    public static final String FIRST_PS = "0b24bb3a613344589f5aded3bdbc82d5";
-
-//    //综合项目产品Key
-//    public static final String SECOND_PK = "cc5da7311ccc4b4688c10a8ef560922f";
-//    // 综合项目产品Key产品密钥
-//    public static final String SECOND_PS = "e7ee60adc13e4f908feb61f432997561";
+    //毕设01_七彩灯：Key
+    public static final String FIRST_PK = "1bbc4dd69ec84e9f84e1016042453c46";
+    //毕设01_七彩灯：密钥
+    public static final String FIRST_PS = "353284ea86f64e13b972a9b33437fe6b";
 
 
-        //综合项目产品Key
-    public static final String SECOND_PK = "364e8b9c922546e8b10b80e241248402";
-    // 综合项目产品Key产品密钥
-    public static final String SECOND_PS = "df276a5cb0a4458badde8b04952478e2";
+    //毕设02_门控：Key
+    public static final String SECOND_PK = "9480ee588c264033bd8e82ae23d98c73";
+    // 毕设02_门控：密钥
+    public static final String SECOND_PS = "121afc5521a942dfa2a357e7459cb6b6";
 
-    //综合项目产品Key
-    public static final String THIRD_PK = "364e8b9c922546e8b10b80e241248402";
-    // 综合项目产品Key产品密钥
-    public static final String THIRD_PS = "df276a5cb0a4458badde8b04952478e2";
+    //毕设03_灯及状态：Key
+    public static final String THIRD_PK = "53ed99d577424d72b2a0d0bf59b0f5a5";
+    // 毕设03_灯及状态：密钥
+    public static final String THIRD_PS = "16dfe4f8e43d43e394d5320115d172ed";
+
+    //毕设04_定时插座：Key
+    public static final String FORTH_PK = "2f7cc2bed46e438ea2f599f2bd1947e1";
+    // 毕设04_定时插座：密钥
+    public static final String FORTH_PS = "44b4ee8928d04f7485729c333b605341";
+
+    //未启用：Key
+    public static final String FIFTH_PK = "2";
+    // ：密钥
+    public static final String FIFTH_PS = "2";
 
 
 

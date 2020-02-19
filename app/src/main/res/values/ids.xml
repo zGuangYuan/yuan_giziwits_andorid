@@ -4,5 +4,6 @@
     <item name="topBar_left_back_icon" type="id"></item>
     <item name="topBar_right_setting_icon" type="id"></item>
     <item name="topBar_pasw_setting_icon" type="id"></item>
+    <item name="topBar_Gete_setting_icon" type="id"></item>
 
 </resources>

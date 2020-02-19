@@ -3,6 +3,7 @@ package com.yuan_giziwits_andorid.UI.DevicrControl;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,27 +21,16 @@ import android.widget.TextView;
 
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.yuan_giziwits_andorid.LOCK.LockActivity;
 import com.yuan_giziwits_andorid.Quit.MyApplication;
 import com.yuan_giziwits_andorid.R;
 import com.yuan_giziwits_andorid.LOCK.PatternLockViewActivity;
+import com.yuan_giziwits_andorid.UI.DevicrControl.GateControl.GateControlActivity;
 import com.yuan_giziwits_andorid.UI.DevicrControl.SubMainActivity.RGBLightActivity;
 
 import java.util.concurrent.ConcurrentHashMap;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -50,76 +40,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public class MainDeviceControlActivity extends BaseDeviceControlActivity {
 
 
-
-    // Content View Elements
-
-
-//    private Button mReset_ButtonId;
-//    private CheckBox mCheckBox;
-//    private Button mRGB_Light_ButtonId;
-//    private CheckBox mColor_control_enter_ID;
-//    private TextView mTV_RedID;
-//    private CheckBox mCheckbox01_ID;
-//    private TextView mTV_GreenID;
-//    private CheckBox mCheckbox02_ID;
-//    private TextView mTV_BlueID;
-//    private CheckBox mCheckbox03_ID;
-//    private ImageButton mIV_ButtonID;
-//    private ImageButton mIV_closeButtonID;
-//    private TextView mTV_indicateID;
-//    private ImageButton mIV_DoorSettingButtonID;
-//    private TextView mTv_data_temp;
-//    private TextView mTextView;
-//    private TextView mTv_data_hum;
-//    private TextView mTv_gsa_detection;
-//    private TextView mTv_body_move;
-//    private Button mReset_DetnumId;
-//    private TextView mTV_Det_timesID;
-
-    // End Of Content View Elements
-
-//    private void bindViews() {
-//
-//
-//        mReset_ButtonId = (Button) findViewById(R.id.Reset_ButtonId);
-//        mCheckBox = (CheckBox) findViewById(R.id.checkBox);
-//        mRGB_Light_ButtonId = (Button) findViewById(R.id.RGB_Light_ButtonId);
-//        mColor_control_enter_ID = (CheckBox) findViewById(R.id.color_control_enter_ID);
-//        mTV_RedID = (TextView) findViewById(R.id.TV_RedID);
-//        mCheckbox01_ID = (CheckBox) findViewById(R.id.checkbox01_ID);
-//        mTV_GreenID = (TextView) findViewById(R.id.TV_GreenID);
-//        mCheckbox02_ID = (CheckBox) findViewById(R.id.checkbox02_ID);
-//        mTV_BlueID = (TextView) findViewById(R.id.TV_BlueID);
-//        mCheckbox03_ID = (CheckBox) findViewById(R.id.checkbox03_ID);
-//        mIV_ButtonID = (ImageButton) findViewById(R.id.IV_ButtonID);
-//        mIV_closeButtonID = (ImageButton) findViewById(R.id.IV_closeButtonID);
-//        mTV_indicateID = (TextView) findViewById(R.id.TV_indicateID);
-//        mIV_DoorSettingButtonID = (ImageButton) findViewById(R.id.IV_DoorSettingButtonID);
-//        mTv_data_temp = (TextView) findViewById(R.id.tv_data_temp);
-//        mTextView = (TextView) findViewById(R.id.textView);
-//        mTv_data_hum = (TextView) findViewById(R.id.tv_data_hum);
-//        mTv_gsa_detection = (TextView) findViewById(R.id.tv_gsa_detection);
-//        mTv_body_move = (TextView) findViewById(R.id.tv_body_move);
-//        mReset_DetnumId = (Button) findViewById(R.id.Reset_DetnumId);
-//        mTV_Det_timesID = (TextView) findViewById(R.id.TV_Det_timesID);
-//    }
-
     /*变量的声明*/
     //在本类应用的云端数据点
     ConcurrentHashMap<String, Object> MaindataMap;
-    private GizWifiDevice device;
 
     //顶层框
     private QMUITopBar mTopBar;
-
-
-    //进入七彩灯控制的按钮
-    private Button mBtn_EnterColorControl;
-
-    //门禁开、关、设置的ImageButton
-    private ImageButton ib_door_open;
-    private ImageButton ib_door_close;
-    private ImageButton ib_door_setting;
 
     //下拉刷新
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -137,12 +63,9 @@ public class MainDeviceControlActivity extends BaseDeviceControlActivity {
     private int LED_B;
     private boolean power=false;
 
-
     //定义网络的数据点不可被修改所以用final被修饰
     private static final String KEY_LED_R = "LED_R";
     private static final String KEY_POWER = "power";
-
-
 
    @SuppressLint("HandlerLeak")
    private Handler mHandler = new Handler(){
@@ -154,7 +77,6 @@ public class MainDeviceControlActivity extends BaseDeviceControlActivity {
            }
        }
    };
-
     /**
      * 异步更新UI
      */
@@ -201,12 +123,7 @@ public class MainDeviceControlActivity extends BaseDeviceControlActivity {
         /*控件实例化*/
         //topbar控件
         mTopBar = findViewById(R.id.DeviceControl_topBar_ID);
-        //七彩灯控制控件
-        mBtn_EnterColorControl =findViewById(R.id.color_control_enter_ID);
-        //门禁开关设置控件
-        ib_door_open = (ImageButton) findViewById(R.id.IV_ButtonID);
-        ib_door_close= (ImageButton) findViewById(R.id.IV_closeButtonID);
-        ib_door_setting =(ImageButton)findViewById(R.id.IV_DoorSettingButtonID);
+
         //下拉刷新
         mSwipeRefreshLayout = findViewById(R.id.MainDeviceCtrlSwipeRefreshLayout_ID);
 
@@ -261,31 +178,32 @@ public class MainDeviceControlActivity extends BaseDeviceControlActivity {
                 finish();
             }
         });
-
-        /*进入七彩灯控制的按钮*/
-        mBtn_EnterColorControl.setOnClickListener(new View.OnClickListener() {
+        //设置标题为app名字
+        mTopBar.setTitle("门控");
+        //在topbar添加一个图标，是一个加号的图片
+        mTopBar.addRightImageButton(R.mipmap.ic_add,R.id.topBar_right_add_icon).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainDeviceControlActivity.this, RGBLightActivity.class));
-            }
-        });
+            public void onClick(View view) {
+                //在topbar右边点击加号显示出来的items
+                final String[] items = new String[]{"大厅定时", "客厅定时","食厅定时"};
+                new QMUIDialog.MenuDialogBuilder(MainDeviceControlActivity.this)
+                        .addItems(items, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case 0:
+                                        //进入密码修改页面
+                                        break;
+                                    case 1:
 
+                                        break;
+                                    case 2:
 
-        /*绑定门禁按钮开的监听器*/
-        ib_door_open.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //进入手势解锁界面
-                startActivity(new Intent(MainDeviceControlActivity.this, PatternLockViewActivity.class));
-            }
-        });
-
-        /*绑定门禁密码管理的监听器*/
-        ib_door_setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //进入密码修改页面
-                startActivity(new Intent(MainDeviceControlActivity.this, LockActivity.class));
+                                        break;
+                                }
+                                dialog.dismiss();
+                            }
+                        }).show();
             }
         });
 
@@ -347,7 +265,6 @@ public class MainDeviceControlActivity extends BaseDeviceControlActivity {
 
             }
     }
-
     /**
      * 复写父类的方法，调用云端数据
      * @param dataMap 保存云端传回来的数据，可控子类调用的方法
